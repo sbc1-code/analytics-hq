@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% set active_page = "overview" %}
+
+{% block title %}Overview{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Stakeholder Site Performance Dashboard</h1>
+  <p>Cross-site performance and customer behavior signals from GA4.</p>
+</div>
+
+{% if alerts.has_alerts %}
+  {% with alerts_list = alerts.alerts %}
+    {% include "alert_banner.html" %}
+  {% endwith %}
+{% endif %}
+
+<div class="executive-strip">
+  <h2>Cross-Site Summary</h2>
+  <p>Last 7 days across all configured properties.</p>
+  <div class="exec-kpi-grid">
+    <div class="exec-kpi">
+      <div class="label">Sessions (7d)</div>
+      <div class="value">{{ executive_summary.total_sessions_7d.display }}</div>
+      <div class="sub {{ executive_summary.total_sessions_wow.css }}">{{ executive_summary.total_sessions_wow.display }} vs prior week</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Users (7d)</div>
+      <div class="value">{{ executive_summary.total_users_7d.display }}</div>
+      <div class="sub">Active audience breadth</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Pageviews (7d)</div>
+      <div class="value">{{ executive_summary.total_pageviews_7d.display }}</div>
+      <div class="sub">Consumption depth</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Intent Views (7d)</div>
+      <div class="value">{{ executive_summary.total_intent_views_7d.display }}</div>
+      <div class="sub">High-value path demand</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Sites Reporting</div>
+      <div class="value">{{ executive_summary.sites_reporting }}</div>
+      <div class="sub">Properties with live GA4 data</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Avg Engagement</div>
+      <div class="value">{{ executive_summary.avg_engagement_rate.display }}</div>
+      <div class="sub">Cross-site average engagement rate</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Pages / Session</div>
+      <div class="value">{{ executive_summary.cross_site_pages_per_session.display }}</div>
+      <div class="sub">Depth across all sessions</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">New User Share</div>
+      <div class="value">{{ executive_summary.avg_new_users_share.display }}</div>
+      <div class="sub">Average audience acquisition mix</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-nav" style="position: static; top: auto;">
+  <a href="#behavior-signals">Behavior Signals</a>
+  <a href="#comparison-7d">7-Day Comparison</a>
+  <a href="#engagement-audience">Engagement and Audience</a>
+  <a href="#device-split">Device Split</a>
+</div>
+
+<div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 24px;">
+  {% for data in sites_data %}
+  {% set site = data.site %}
+  <div class="kpi-card" style="border-top: 4px solid {{ site.accent_color }};">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <div class="kpi-label" style="margin-bottom:0;">{{ site.name }}</div>
+      <a href="{{ site.id }}/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
+    </div>
+    {% if data.status == "ok" %}
+      <div class="kpi-value">{{ data.kpis.sessions_7d.display }}</div>
+      <div class="kpi-wow {{ data.kpis.sessions_7d.wow.css }}">{{ data.kpis.sessions_7d.wow.display }} sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        {{ data.commercial.revenue_role }}
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: {{ data.commercial.intent.top_pages_share_display }}</span>
+        <span class="cx-chip">Primary channel: {{ data.commercial.primary_channel.label }}</span>
+      </div>
+    {% else %}
+      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
+      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card" id="behavior-signals">
+  <div class="card-title">Customer Behavior Signals</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Business Role</th>
+        <th class="num">Intent Views (7d)</th>
+        <th>Primary Channel</th>
+        <th>Top Intent Page</th>
+        <th class="num">Momentum</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in sites_data %}
+      {% set site = data.site %}
+      <tr>
+        <td>
+          <a href="{{ site.id }}/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:{{ site.accent_color }}; margin-right:8px;"></span>
+            {{ site.name }}
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">{{ site.url }}</div>
+        </td>
+        {% if data.status == "ok" %}
+          <td style="font-size:12px;">{{ data.commercial.revenue_role }}</td>
+          <td class="num">
+            {{ data.commercial.intent.views_7d_fmt }}
+            <div style="font-size:11px; color:var(--text-muted);">{{ data.commercial.intent.top_pages_share_display }} of top-page demand</div>
+          </td>
+          <td>
+            <strong>{{ data.commercial.primary_channel.label }}</strong>
+            <div style="font-size:11px; color:var(--text-muted);">{{ data.commercial.primary_channel.pct }}% share</div>
+          </td>
+          <td style="font-size:12px;">
+            {% if data.commercial.intent.matched_pages %}
+              {{ data.commercial.intent.matched_pages[0].path }}
+            {% else %}
+              No high-intent page in current top list
+            {% endif %}
+          </td>
+          <td class="num {{ data.kpis.sessions_7d.wow.css }}"><strong>{{ data.kpis.sessions_7d.wow.display }}</strong></td>
+        {% else %}
+          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card" id="comparison-7d">
+  <div class="card-title">7-Day Comparison</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th class="num">Sessions (7d)</th>
+        <th class="num">Users (7d)</th>
+        <th class="num">Pageviews (7d)</th>
+        <th class="num">Sessions (28d)</th>
+        <th class="num">WoW Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in sites_data %}
+      {% set site = data.site %}
+      <tr>
+        <td>
+          <a href="{{ site.id }}/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:{{ site.accent_color }}; margin-right:8px;"></span>
+            {{ site.name }}
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">{{ site.url }}</div>
+        </td>
+        {% if data.status == "ok" %}
+          <td class="num">{{ data.kpis.sessions_7d.display }}</td>
+          <td class="num">{{ data.kpis.users_7d.display }}</td>
+          <td class="num">{{ data.kpis.pageviews_7d.display }}</td>
+          <td class="num">{{ data.kpis.sessions_28d.display }}</td>
+          <td class="num {{ data.kpis.sessions_7d.wow.css }}"><strong>{{ data.kpis.sessions_7d.wow.display }}</strong></td>
+        {% else %}
+          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card" id="engagement-audience">
+  <div class="card-title">Engagement and Audience Mix (7d)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th class="num">Engagement Rate</th>
+        <th class="num">Avg Session Duration</th>
+        <th class="num">Pages / Session</th>
+        <th class="num">New Users</th>
+        <th class="num">Returning Users</th>
+        <th class="num">14-Day Session Trend</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in sites_data %}
+      {% set site = data.site %}
+      <tr>
+        <td>
+          <a href="{{ site.id }}/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:{{ site.accent_color }}; margin-right:8px;"></span>
+            {{ site.name }}
+          </a>
+        </td>
+        {% if data.status == "ok" %}
+          <td class="num">{{ data.engagement.engagement_rate_display | default("--") }}</td>
+          <td class="num">{{ data.engagement.avg_session_duration_display | default("--") }}</td>
+          <td class="num">{{ data.engagement.pageviews_per_session.display | default("--") }}</td>
+          <td class="num">{{ data.navigation.audience_summary.new_users_pct_display | default("--") }}</td>
+          <td class="num">{{ data.navigation.audience_summary.returning_users_pct_display | default("--") }}</td>
+          <td class="num {{ data.navigation.trend_summary.wow.css | default('trend-flat') }}"><strong>{{ data.navigation.trend_summary.wow.display | default("--") }}</strong></td>
+        {% else %}
+          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card" id="device-split">
+  <div class="card-title">Device Split (7-Day)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Desktop</th>
+        <th>Mobile</th>
+        <th>Tablet</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in sites_data %}
+      {% set site = data.site %}
+      <tr>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:{{ site.accent_color }}; margin-right:8px;"></span>{{ site.name }}</td>
+        {% if data.status == "ok" %}
+          {% set device_map = {} %}
+          {% for d in data.devices %}{% set _ = device_map.update({d.label: d.pct}) %}{% endfor %}
+          {% for label in ["Desktop", "Mobile", "Tablet"] %}
+          <td>
+            {% if label in device_map %}
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">{{ device_map[label] }}%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:{{ device_map[label] }}%; background:{{ site.accent_color }};"></div></div>
+            {% else %}--{% endif %}
+          </td>
+          {% endfor %}
+        {% else %}
+          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

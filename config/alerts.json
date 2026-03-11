@@ -1,0 +1,7 @@
+{
+  "alerts": {
+    "wow_drop_threshold_pct": 25,
+    "zero_data_flag": true,
+    "comparison_metric": "sessions"
+  }
+}

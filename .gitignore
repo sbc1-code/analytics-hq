@@ -1,0 +1,11 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Local/generated dashboard data
+data/*.json
+!data/.gitkeep
+
+# Local/generated static output
+public/*
+!public/.gitkeep

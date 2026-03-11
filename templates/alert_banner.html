@@ -1,0 +1,9 @@
+{% for alert in alerts_list %}
+<div class="alert-banner {% if alert.severity == 'critical' %}alert-critical{% else %}alert-warning{% endif %}">
+  <span class="alert-icon">{% if alert.severity == 'critical' %}&#9888;{% else %}&#8505;{% endif %}</span>
+  <div class="alert-body">
+    <strong>{{ alert.site_name }}{% if alert.type == 'wow_drop' %} &mdash; Traffic Drop{% elif alert.type == 'zero_data' %} &mdash; No Data{% else %} &mdash; Pending Setup{% endif %}</strong>
+    {{ alert.message }}
+  </div>
+</div>
+{% endfor %}

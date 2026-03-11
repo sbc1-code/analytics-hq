@@ -1,0 +1,73 @@
+{
+  "sites": [
+    {
+      "id": "site1",
+      "name": "Corporate Site",
+      "url": "www.site1.example.com",
+      "measurement_id": "G-XXXXXXXXXX",
+      "property_id_env": "GA4_PROPERTY_ID_1",
+      "numeric_property_id": "GA4_PROPERTY_ID_1",
+      "revenue_role": "Corporate site for brand discovery and contact intent",
+      "value_signals": [
+        "Get in touch",
+        "Dealer and partner discovery",
+        "Cross-brand product exploration"
+      ],
+      "intent_path_keywords": [
+        "/contact",
+        "/dealer",
+        "/partner",
+        "/products",
+        "/support"
+      ],
+      "accent_color": "#0956a1",
+      "text_color": "#ffffff"
+    },
+    {
+      "id": "site2",
+      "name": "Support Site",
+      "url": "support.site2.example.com",
+      "measurement_id": "G-YYYYYYYYYY",
+      "property_id_env": "GA4_PROPERTY_ID_2",
+      "numeric_property_id": "GA4_PROPERTY_ID_2",
+      "revenue_role": "Support site for product help, downloads, and product navigation",
+      "value_signals": [
+        "Software download intent",
+        "Product page progression",
+        "Post-purchase support journeys"
+      ],
+      "intent_path_keywords": [
+        "/hq",
+        "/download",
+        "/product",
+        "/support"
+      ],
+      "accent_color": "#da291c",
+      "text_color": "#ffffff"
+    },
+    {
+      "id": "site3",
+      "name": "Product Site",
+      "url": "www.site3.example.com",
+      "measurement_id": "G-ZZZZZZZZZZ",
+      "property_id_env": "GA4_PROPERTY_ID_3",
+      "numeric_property_id": "GA4_PROPERTY_ID_3",
+      "revenue_role": "Product site for solution discovery and inquiry intent",
+      "value_signals": [
+        "Product-family exploration",
+        "Technical documentation access",
+        "Contact and quote intent"
+      ],
+      "intent_path_keywords": [
+        "/products",
+        "/product",
+        "/documentation",
+        "/contact",
+        "/quote",
+        "/support"
+      ],
+      "accent_color": "#1a4b8c",
+      "text_color": "#ffffff"
+    }
+  ]
+}

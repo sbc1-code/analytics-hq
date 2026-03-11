@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics HQ | Sample Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0b0b;
+      --surface: #141414;
+      --surface-alt: #1a1a1a;
+      --border: #222;
+      --accent: #8a9a7b;
+      --accent-light: #a3b394;
+      --text: #e0e0e0;
+      --text-muted: #888;
+      --text-heading: #f0f0f0;
+      --green: #8a9a7b;
+      --green-bg: rgba(138, 154, 123, 0.12);
+      --red: #c0392b;
+      --red-bg: rgba(192, 57, 43, 0.1);
+      --amber: #d4a24e;
+      --amber-bg: rgba(212, 162, 78, 0.1);
+      --white: #ffffff;
+      --nav-bg: #111;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+      --bar-bg: #222;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f3f0;
+      --surface: #ffffff;
+      --surface-alt: #f9f8f6;
+      --border: #dde2ea;
+      --text: #2D3031;
+      --text-muted: #5f666b;
+      --text-heading: #1a1a1a;
+      --green-bg: #e9f5e4;
+      --red-bg: #fdecea;
+      --amber-bg: #fff4e8;
+      --nav-bg: #ffffff;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      --bar-bg: #eee;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      height: 64px;
+      gap: 26px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-brand {
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-suite {
+      color: var(--text-heading);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      padding: 7px 11px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .nav-links a:hover {
+      background: var(--surface-alt);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .nav-links a.active {
+      background: var(--green-bg);
+      color: var(--text-heading);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(138, 154, 123, 0.25);
+    }
+    .nav-spacer { flex: 1; }
+    .nav-timestamp {
+      color: var(--text-muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .theme-toggle {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    /* LAYOUT */
+    .page-wrap { max-width: 1240px; margin: 0 auto; padding: 28px 24px 48px; }
+
+    /* SAMPLE BANNER */
+    .sample-banner {
+      background: var(--green-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--accent-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    [data-theme="light"] .sample-banner { color: #4a5a3d; }
+    .sample-banner strong { font-weight: 700; }
+
+    /* PAGE HEADER */
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 {
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+    .page-header p { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+
+    /* CARDS */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* KPI GRID */
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: var(--card-shadow);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
+    .kpi-value { font-size: 28px; font-weight: 700; color: var(--text-heading); line-height: 1; }
+    .kpi-wow { font-size: 12px; margin-top: 6px; font-weight: 600; }
+    .trend-up { color: var(--green); }
+    .trend-down { color: var(--red); }
+    .trend-flat { color: var(--text-muted); }
+
+    /* TABLES */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface-alt); }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    /* BAR */
+    .bar-wrap { background: var(--bar-bg); border-radius: 3px; height: 6px; min-width: 80px; }
+    .bar-fill { height: 6px; border-radius: 3px; background: var(--accent); }
+
+    /* EXECUTIVE STRIP */
+    .executive-strip {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      background: var(--surface);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .executive-strip h2 {
+      color: var(--text-heading);
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+    .executive-strip p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .exec-kpi-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .exec-kpi {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-alt);
+      padding: 10px 12px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .exec-kpi .label {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .exec-kpi .value {
+      font-size: 23px;
+      line-height: 1;
+      color: var(--text-heading);
+      font-weight: 700;
+    }
+    .exec-kpi .sub {
+      margin-top: 5px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* CX CHIPS */
+    .cx-chip {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text-muted);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    /* SECTION NAV */
+    .section-nav {
+      margin-bottom: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .section-nav a {
+      text-decoration: none;
+      font-size: 12px;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: var(--surface-alt);
+      font-weight: 600;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .section-nav a:hover {
+      background: var(--green-bg);
+      border-color: var(--accent);
+    }
+
+    /* DOT */
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 11px;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 980px) {
+      nav { padding: 0 16px; gap: 12px; }
+      .nav-links a { padding: 5px 8px; }
+      .nav-timestamp { display: none; }
+      .page-wrap { padding: 16px 14px 34px; }
+      .nav-suite { display: none; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .section-nav { flex-wrap: wrap; }
+      .exec-kpi-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+      .page-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-brand">
+    <span class="nav-suite">Analytics HQ</span>
+  </a>
+  <div class="nav-links">
+    <a href="#" class="active">Overview</a>
+    <a href="#northwind">Northwind Corp</a>
+    <a href="#cascadia">Cascadia Labs</a>
+    <a href="#mesa">Mesa Supply Co</a>
+  </div>
+  <div class="nav-spacer"></div>
+  <span class="nav-timestamp">Mar 10, 2026 09:00 AM PST</span>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light and dark mode">Light</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="sample-banner">
+    <strong>Sample Output</strong> This is a demo of the Analytics HQ dashboard using fictional data. The actual pipeline connects to GA4 properties and generates reports automatically.
+  </div>
+
+  <div class="page-header">
+    <h1>Stakeholder Site Performance Dashboard</h1>
+    <p>Cross-site performance and customer behavior signals from GA4.</p>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="executive-strip">
+    <h2>Cross-Site Summary</h2>
+    <p>Last 7 days across all configured properties.</p>
+    <div class="exec-kpi-grid">
+      <div class="exec-kpi">
+        <div class="label">Sessions (7d)</div>
+        <div class="value">18,492</div>
+        <div class="sub trend-up">+8.3% vs prior week</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">Users (7d)</div>
+        <div class="value">12,847</div>
+        <div class="sub">Active audience breadth</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">Pageviews (7d)</div>
+        <div class="value">47,210</div>
+        <div class="sub">Consumption depth</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">Intent Views (7d)</div>
+        <div class="value">3,841</div>
+        <div class="sub">High-value path demand</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">Sites Reporting</div>
+        <div class="value">3</div>
+        <div class="sub">Properties with live GA4 data</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">Avg Engagement</div>
+        <div class="value">62.4%</div>
+        <div class="sub">Cross-site average engagement rate</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">Pages / Session</div>
+        <div class="value">2.55</div>
+        <div class="sub">Depth across all sessions</div>
+      </div>
+      <div class="exec-kpi">
+        <div class="label">New User Share</div>
+        <div class="value">58.1%</div>
+        <div class="sub">Average audience acquisition mix</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION NAV -->
+  <div class="section-nav">
+    <a href="#behavior-signals">Behavior Signals</a>
+    <a href="#comparison-7d">7-Day Comparison</a>
+    <a href="#engagement-audience">Engagement and Audience</a>
+    <a href="#device-split">Device Split</a>
+  </div>
+
+  <!-- SITE CARDS -->
+  <div class="kpi-grid" style="margin-bottom: 24px;">
+    <!-- Northwind Corp -->
+    <div class="kpi-card" style="border-top: 4px solid #4a90d9;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <div class="kpi-label" style="margin-bottom:0;">Northwind Corp</div>
+        <span style="font-size:11px; color:var(--accent);">Property Detail</span>
+      </div>
+      <div class="kpi-value">8,214</div>
+      <div class="kpi-wow trend-up">+12.1% sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        Primary revenue driver: e-commerce catalog and wholesale ordering
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: 34.2%</span>
+        <span class="cx-chip">Primary channel: Organic Search</span>
+      </div>
+    </div>
+
+    <!-- Cascadia Labs -->
+    <div class="kpi-card" style="border-top: 4px solid #e67e22;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <div class="kpi-label" style="margin-bottom:0;">Cascadia Labs</div>
+        <span style="font-size:11px; color:var(--accent);">Property Detail</span>
+      </div>
+      <div class="kpi-value">6,731</div>
+      <div class="kpi-wow trend-up">+5.7% sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        Lead generation for laboratory testing services
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: 28.6%</span>
+        <span class="cx-chip">Primary channel: Direct</span>
+      </div>
+    </div>
+
+    <!-- Mesa Supply Co -->
+    <div class="kpi-card" style="border-top: 4px solid #8a9a7b;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <div class="kpi-label" style="margin-bottom:0;">Mesa Supply Co</div>
+        <span style="font-size:11px; color:var(--accent);">Property Detail</span>
+      </div>
+      <div class="kpi-value">3,547</div>
+      <div class="kpi-wow trend-down">-2.4% sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        Product catalog and dealer locator for industrial supplies
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: 41.8%</span>
+        <span class="cx-chip">Primary channel: Paid Search</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEHAVIOR SIGNALS -->
+  <div class="card" id="behavior-signals">
+    <div class="card-title">Customer Behavior Signals</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Business Role</th>
+          <th class="num">Intent Views (7d)</th>
+          <th>Primary Channel</th>
+          <th>Top Intent Page</th>
+          <th class="num">Momentum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="dot" style="background:#4a90d9;"></span><strong>Northwind Corp</strong>
+            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">northwindcorp.com</div>
+          </td>
+          <td style="font-size:12px;">E-commerce catalog, wholesale ordering</td>
+          <td class="num">
+            1,642
+            <div style="font-size:11px; color:var(--text-muted);">34.2% of top-page demand</div>
+          </td>
+          <td>
+            <strong>Organic Search</strong>
+            <div style="font-size:11px; color:var(--text-muted);">52% share</div>
+          </td>
+          <td style="font-size:12px;">/products/catalog</td>
+          <td class="num trend-up"><strong>+12.1%</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dot" style="background:#e67e22;"></span><strong>Cascadia Labs</strong>
+            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">cascadialabs.io</div>
+          </td>
+          <td style="font-size:12px;">Lead generation, testing services</td>
+          <td class="num">
+            1,103
+            <div style="font-size:11px; color:var(--text-muted);">28.6% of top-page demand</div>
+          </td>
+          <td>
+            <strong>Direct</strong>
+            <div style="font-size:11px; color:var(--text-muted);">38% share</div>
+          </td>
+          <td style="font-size:12px;">/services/request-quote</td>
+          <td class="num trend-up"><strong>+5.7%</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dot" style="background:#8a9a7b;"></span><strong>Mesa Supply Co</strong>
+            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">mesasupply.com</div>
+          </td>
+          <td style="font-size:12px;">Product catalog, dealer locator</td>
+          <td class="num">
+            1,096
+            <div style="font-size:11px; color:var(--text-muted);">41.8% of top-page demand</div>
+          </td>
+          <td>
+            <strong>Paid Search</strong>
+            <div style="font-size:11px; color:var(--text-muted);">44% share</div>
+          </td>
+          <td style="font-size:12px;">/dealers/find-location</td>
+          <td class="num trend-down"><strong>-2.4%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7-DAY COMPARISON -->
+  <div class="card" id="comparison-7d">
+    <div class="card-title">7-Day Comparison</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th class="num">Sessions (7d)</th>
+          <th class="num">Users (7d)</th>
+          <th class="num">Pageviews (7d)</th>
+          <th class="num">Sessions (28d)</th>
+          <th class="num">WoW Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="dot" style="background:#4a90d9;"></span><strong>Northwind Corp</strong>
+            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">northwindcorp.com</div>
+          </td>
+          <td class="num">8,214</td>
+          <td class="num">5,891</td>
+          <td class="num">22,340</td>
+          <td class="num">30,126</td>
+          <td class="num trend-up"><strong>+12.1%</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dot" style="background:#e67e22;"></span><strong>Cascadia Labs</strong>
+            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">cascadialabs.io</div>
+          </td>
+          <td class="num">6,731</td>
+          <td class="num">4,502</td>
+          <td class="num">16,284</td>
+          <td class="num">25,810</td>
+          <td class="num trend-up"><strong>+5.7%</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dot" style="background:#8a9a7b;"></span><strong>Mesa Supply Co</strong>
+            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">mesasupply.com</div>
+          </td>
+          <td class="num">3,547</td>
+          <td class="num">2,454</td>
+          <td class="num">8,586</td>
+          <td class="num">15,230</td>
+          <td class="num trend-down"><strong>-2.4%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ENGAGEMENT & AUDIENCE -->
+  <div class="card" id="engagement-audience">
+    <div class="card-title">Engagement and Audience Mix (7d)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th class="num">Engagement Rate</th>
+          <th class="num">Avg Session Duration</th>
+          <th class="num">Pages / Session</th>
+          <th class="num">New Users</th>
+          <th class="num">Returning Users</th>
+          <th class="num">14-Day Session Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="dot" style="background:#4a90d9;"></span><strong>Northwind Corp</strong></td>
+          <td class="num">68.2%</td>
+          <td class="num">2m 14s</td>
+          <td class="num">2.72</td>
+          <td class="num">54.3%</td>
+          <td class="num">45.7%</td>
+          <td class="num trend-up"><strong>+9.8%</strong></td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:#e67e22;"></span><strong>Cascadia Labs</strong></td>
+          <td class="num">61.5%</td>
+          <td class="num">1m 48s</td>
+          <td class="num">2.42</td>
+          <td class="num">63.1%</td>
+          <td class="num">36.9%</td>
+          <td class="num trend-up"><strong>+3.2%</strong></td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:#8a9a7b;"></span><strong>Mesa Supply Co</strong></td>
+          <td class="num">57.4%</td>
+          <td class="num">1m 32s</td>
+          <td class="num">2.42</td>
+          <td class="num">56.8%</td>
+          <td class="num">43.2%</td>
+          <td class="num trend-down"><strong>-4.1%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DEVICE SPLIT -->
+  <div class="card" id="device-split">
+    <div class="card-title">Device Split (7-Day)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Desktop</th>
+          <th>Mobile</th>
+          <th>Tablet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="dot" style="background:#4a90d9;"></span>Northwind Corp</td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">62%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:62%; background:#4a90d9;"></div></div>
+          </td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">31%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:31%; background:#4a90d9;"></div></div>
+          </td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">7%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:7%; background:#4a90d9;"></div></div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:#e67e22;"></span>Cascadia Labs</td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">55%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:55%; background:#e67e22;"></div></div>
+          </td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">38%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:38%; background:#e67e22;"></div></div>
+          </td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">7%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:7%; background:#e67e22;"></div></div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:#8a9a7b;"></span>Mesa Supply Co</td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">48%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:48%; background:#8a9a7b;"></div></div>
+          </td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">44%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:44%; background:#8a9a7b;"></div></div>
+          </td>
+          <td>
+            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">8%</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:8%; background:#8a9a7b;"></div></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  Analytics HQ | Generated by automated pipeline | <a href="https://github.com/sbc1-code/analytics-hq">View on GitHub</a>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.querySelector('.theme-toggle');
+    if (html.getAttribute('data-theme') === 'light') {
+      html.removeAttribute('data-theme');
+      btn.textContent = 'Light';
+    } else {
+      html.setAttribute('data-theme', 'light');
+      btn.textContent = 'Dark';
+    }
+  }
+</script>
+
+</body>
+</html>
