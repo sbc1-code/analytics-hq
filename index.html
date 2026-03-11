@@ -45,6 +45,7 @@
       --bar-bg: #eee;
     }
 
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background: var(--bg);
@@ -341,10 +342,10 @@
     <span class="nav-suite">Analytics HQ</span>
   </a>
   <div class="nav-links">
-    <a href="#" class="active">Overview</a>
-    <a href="#northwind">Northwind Corp</a>
-    <a href="#cascadia">Cascadia Labs</a>
-    <a href="#mesa">Mesa Supply Co</a>
+    <a href="#" class="active" data-site="overview">Overview</a>
+    <a href="#northwind" data-site="northwind">Northwind Corp</a>
+    <a href="#cascadia" data-site="cascadia">Cascadia Labs</a>
+    <a href="#mesa" data-site="mesa">Mesa Supply Co</a>
   </div>
   <div class="nav-spacer"></div>
   <span class="nav-timestamp">Mar 10, 2026 09:00 AM PST</span>
@@ -421,7 +422,7 @@
   <!-- SITE CARDS -->
   <div class="kpi-grid" style="margin-bottom: 24px;">
     <!-- Northwind Corp -->
-    <div class="kpi-card" style="border-top: 4px solid #4a90d9;">
+    <div id="northwind" class="kpi-card" style="border-top: 4px solid #4a90d9;">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
         <div class="kpi-label" style="margin-bottom:0;">Northwind Corp</div>
         <span style="font-size:11px; color:var(--accent);">Property Detail</span>
@@ -438,7 +439,7 @@
     </div>
 
     <!-- Cascadia Labs -->
-    <div class="kpi-card" style="border-top: 4px solid #e67e22;">
+    <div id="cascadia" class="kpi-card" style="border-top: 4px solid #e67e22;">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
         <div class="kpi-label" style="margin-bottom:0;">Cascadia Labs</div>
         <span style="font-size:11px; color:var(--accent);">Property Detail</span>
@@ -455,7 +456,7 @@
     </div>
 
     <!-- Mesa Supply Co -->
-    <div class="kpi-card" style="border-top: 4px solid #8a9a7b;">
+    <div id="mesa" class="kpi-card" style="border-top: 4px solid #8a9a7b;">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
         <div class="kpi-label" style="margin-bottom:0;">Mesa Supply Co</div>
         <span style="font-size:11px; color:var(--accent);">Property Detail</span>
@@ -710,17 +711,45 @@
 </footer>
 
 <script>
-  function toggleTheme() {
+  // Theme toggle with localStorage persistence
+  function setTheme(mode) {
     const html = document.documentElement;
     const btn = document.querySelector('.theme-toggle');
-    if (html.getAttribute('data-theme') === 'light') {
-      html.removeAttribute('data-theme');
-      btn.textContent = 'Light';
-    } else {
+    if (mode === 'light') {
       html.setAttribute('data-theme', 'light');
       btn.textContent = 'Dark';
+    } else {
+      html.removeAttribute('data-theme');
+      btn.textContent = 'Light';
     }
+    localStorage.setItem('ahq_theme', mode);
   }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    setTheme(current === 'light' ? 'dark' : 'light');
+  }
+  // Init theme from localStorage or system preference
+  (function() {
+    const stored = localStorage.getItem('ahq_theme');
+    if (stored) { setTheme(stored); }
+    else if (window.matchMedia('(prefers-color-scheme: light)').matches) { setTheme('light'); }
+  })();
+
+  // Nav link active state + smooth scroll
+  document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
+      link.classList.add('active');
+      var target = link.getAttribute('href');
+      if (target && target !== '#') {
+        var el = document.querySelector(target);
+        if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
 </script>
 
 </body>
