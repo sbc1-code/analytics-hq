@@ -1,8 +1,12 @@
 """
-report.py -- Render Jinja2 templates and write public/ directory tree.
+report.py -- Render Jinja2 templates and write static dashboard output.
+
+The repo still writes public/ for artifact-style deploys, but GitHub Pages for this
+project serves the repository root. Keep both destinations in sync.
 """
 
 import json
+import os
 import shutil
 from pathlib import Path
 from datetime import datetime, timezone
@@ -10,6 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 
 DATA_DIR   = Path("data")
 PUBLIC_DIR = Path("public")
+ROOT_DIR   = Path(".")
 ASSETS_DIR = Path("assets")
 PUBLIC_DIR.mkdir(exist_ok=True)
 
@@ -110,6 +115,26 @@ def compute_executive_summary(overview_rows):
         "top_risk": top_risk
     }
 
+def build_setup_status(sites_data):
+    credentials_configured = bool(
+        os.environ.get("GA4_SERVICE_ACCOUNT_JSON", "").strip()
+        or os.environ.get("GA4_SERVICE_ACCOUNT_FILE", "").strip()
+    )
+    configured_properties = sum(
+        1 for data in sites_data
+        if data.get("status") == "ok" or data.get("reason") != "property_id_not_configured"
+    )
+    live_properties = sum(1 for data in sites_data if data.get("status") == "ok")
+
+    return {
+        "credentials_configured": credentials_configured,
+        "configured_properties": configured_properties,
+        "total_properties": len(sites_data),
+        "live_properties": live_properties,
+        "scheduled_report": Path(".github/workflows/update-report.yml").exists(),
+        "alerts_configured": Path("config/alerts.json").exists(),
+    }
+
 # Load alerts
 alerts_path = DATA_DIR / "alerts.json"
 alerts = json.loads(alerts_path.read_text()) if alerts_path.exists() else {"has_alerts": False, "alerts": []}
@@ -134,39 +159,48 @@ for site in sites:
             "site": site
         })
 
+setup_status = build_setup_status(sites_data)
+
 # Copy static assets
 if ASSETS_DIR.exists():
     public_assets = PUBLIC_DIR / "assets"
     shutil.copytree(ASSETS_DIR, public_assets, dirs_exist_ok=True)
     print("  Copied public/assets/")
 
-# Render overview page
-overview_html = env.get_template("overview.html").render(
-    overview=overview,
-    sites_data=sites_data,
-    executive_summary=executive_summary,
-    alerts=alerts,
-    generated_at=generated_at,
-    root_prefix="."
-)
-(PUBLIC_DIR / "index.html").write_text(overview_html, encoding="utf-8")
-print("  Wrote public/index.html")
+def render_static_tree(output_dir, label):
+    output_dir.mkdir(exist_ok=True)
 
-# Render per-site pages
-for site_data in sites_data:
-    site_id = site_data.get("site_id") or site_data.get("site", {}).get("id")
-    site_dir = PUBLIC_DIR / site_id
-    site_dir.mkdir(exist_ok=True)
-
-    site_alerts = [a for a in alerts.get("alerts", []) if a["site_id"] == site_id]
-
-    site_html = env.get_template("site.html").render(
-        data=site_data,
-        site_alerts=site_alerts,
+    overview_html = env.get_template("overview.html").render(
+        overview=overview,
+        sites_data=sites_data,
+        executive_summary=executive_summary,
+        setup_status=setup_status,
+        alerts=alerts,
         generated_at=generated_at,
-        root_prefix=".."
+        root_prefix=".",
+        config_sites=sites,
     )
-    (site_dir / "index.html").write_text(site_html, encoding="utf-8")
-    print(f"  Wrote public/{site_id}/index.html")
+    (output_dir / "index.html").write_text(overview_html, encoding="utf-8")
+    print(f"  Wrote {label}/index.html")
+
+    for site_data in sites_data:
+        site_id = site_data.get("site_id") or site_data.get("site", {}).get("id")
+        site_dir = output_dir / site_id
+        site_dir.mkdir(exist_ok=True)
+
+        site_alerts = [a for a in alerts.get("alerts", []) if a["site_id"] == site_id]
+
+        site_html = env.get_template("site.html").render(
+            data=site_data,
+            site_alerts=site_alerts,
+            generated_at=generated_at,
+            root_prefix="..",
+            config_sites=sites,
+        )
+        (site_dir / "index.html").write_text(site_html, encoding="utf-8")
+        print(f"  Wrote {label}/{site_id}/index.html")
+
+render_static_tree(PUBLIC_DIR, "public")
+render_static_tree(ROOT_DIR, "root")
 
 print("report.py done.")

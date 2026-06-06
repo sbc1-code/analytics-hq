@@ -1,0 +1,52 @@
+name: Update Analytics HQ Report
+
+on:
+  schedule:
+    - cron: "45 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-report:
+    runs-on: ubuntu-latest
+    env:
+      GA4_SERVICE_ACCOUNT_JSON: ${{ secrets.GA4_SERVICE_ACCOUNT_JSON }}
+      GA4_PROPERTY_ID_PRIMARY: ${{ secrets.GA4_PROPERTY_ID_PRIMARY }}
+      GA4_PROPERTY_ID_SUPPORT: ${{ secrets.GA4_PROPERTY_ID_SUPPORT }}
+      GA4_PROPERTY_ID_PRODUCT: ${{ secrets.GA4_PROPERTY_ID_PRODUCT }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Compile check
+        run: python -m py_compile scripts/*.py
+
+      - name: Build report
+        run: |
+          python scripts/fetch.py
+          python scripts/analyze.py
+          python scripts/alert.py
+          python scripts/report.py
+
+      - name: Commit updated report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html */index.html
+          if git diff --staged --quiet; then
+            echo "No report changes to commit."
+          else
+            git commit -m "data: update analytics hq report"
+            git push
+          fi

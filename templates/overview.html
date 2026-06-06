@@ -5,8 +5,8 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>Stakeholder Site Performance Dashboard</h1>
-  <p>Cross-site performance and customer behavior signals from GA4.</p>
+  <h1>Connect GA4. Ship stakeholder reports automatically.</h1>
+  <p>Analytics HQ turns configured GA4 properties into weekly-ready site performance reports. Until credentials and property IDs are connected, this page shows the setup state instead of fake metrics.</p>
 </div>
 
 {% if alerts.has_alerts %}
@@ -15,9 +15,50 @@
   {% endwith %}
 {% endif %}
 
+<div class="setup-hero">
+  <div class="setup-panel">
+    <h2>Built for operators who need the report without the spreadsheet chase.</h2>
+    <p>Configure a service account, add numeric GA4 property IDs, and let the pipeline fetch traffic, engagement, device, channel, and high-intent path signals into static GitHub Pages reports.</p>
+  </div>
+  <div class="setup-panel">
+    <h2>Current connection state</h2>
+    <p>{{ setup_status.live_properties }} of {{ setup_status.total_properties }} configured properties are reporting live GA4 data. Live metrics appear after connection.</p>
+  </div>
+</div>
+
+<div class="setup-grid" aria-label="Analytics HQ setup checklist">
+  <div class="setup-card {% if setup_status.credentials_configured %}ready{% else %}pending{% endif %}">
+    <span class="setup-state">{% if setup_status.credentials_configured %}Ready{% else %}Pending{% endif %}</span>
+    <h3>GA4 service account</h3>
+    <p>Set <code>GA4_SERVICE_ACCOUNT_JSON</code> or <code>GA4_SERVICE_ACCOUNT_FILE</code> in GitHub Actions.</p>
+  </div>
+  <div class="setup-card {% if setup_status.configured_properties == setup_status.total_properties and setup_status.total_properties %}ready{% else %}pending{% endif %}">
+    <span class="setup-state">{% if setup_status.configured_properties == setup_status.total_properties and setup_status.total_properties %}Ready{% else %}Pending{% endif %}</span>
+    <h3>Property IDs</h3>
+    <p>{{ setup_status.configured_properties }} of {{ setup_status.total_properties }} numeric GA4 property IDs are configured.</p>
+  </div>
+  <div class="setup-card {% if setup_status.scheduled_report %}ready{% else %}pending{% endif %}">
+    <span class="setup-state">{% if setup_status.scheduled_report %}Ready{% else %}Pending{% endif %}</span>
+    <h3>Scheduled report</h3>
+    <p>GitHub Actions can refresh the static report on schedule or by manual dispatch.</p>
+  </div>
+  <div class="setup-card {% if setup_status.alerts_configured %}ready{% else %}pending{% endif %}">
+    <span class="setup-state">{% if setup_status.alerts_configured %}Ready{% else %}Pending{% endif %}</span>
+    <h3>Alerts config</h3>
+    <p>Optional thresholds flag session drops, engagement shifts, and high-priority changes.</p>
+  </div>
+</div>
+
+{% if executive_summary.sites_reporting == 0 %}
+<div class="empty-preview">
+  <strong>Live metrics appear after connection.</strong>
+  The cards and tables below are wired to the generated GA4 pipeline, but no configured property is reporting yet. This default state is intentionally blank rather than filled with invented metrics.
+</div>
+{% endif %}
+
 <div class="executive-strip">
-  <h2>Cross-Site Summary</h2>
-  <p>Last 7 days across all configured properties.</p>
+  <h2>Cross-site summary</h2>
+  <p>Last 7 days across connected GA4 properties.</p>
   <div class="exec-kpi-grid">
     <div class="exec-kpi">
       <div class="label">Sessions (7d)</div>

@@ -1,72 +1,72 @@
 {
   "sites": [
     {
-      "id": "site1",
-      "name": "Corporate Site",
-      "url": "www.site1.example.com",
-      "measurement_id": "G-XXXXXXXXXX",
-      "property_id_env": "GA4_PROPERTY_ID_1",
-      "numeric_property_id": "GA4_PROPERTY_ID_1",
-      "revenue_role": "Corporate site for brand discovery and contact intent",
+      "id": "primary",
+      "name": "Primary Website",
+      "url": "example.com",
+      "measurement_id": "",
+      "property_id_env": "GA4_PROPERTY_ID_PRIMARY",
+      "numeric_property_id": "",
+      "revenue_role": "Primary public site for brand discovery, content engagement, and contact intent",
       "value_signals": [
-        "Get in touch",
-        "Dealer and partner discovery",
-        "Cross-brand product exploration"
+        "Contact intent",
+        "Product or service discovery",
+        "High-value content paths"
       ],
       "intent_path_keywords": [
         "/contact",
-        "/dealer",
-        "/partner",
+        "/demo",
+        "/pricing",
         "/products",
-        "/support"
+        "/services"
       ],
-      "accent_color": "#0956a1",
+      "accent_color": "#2f6f5f",
       "text_color": "#ffffff"
     },
     {
-      "id": "site2",
-      "name": "Support Site",
-      "url": "support.site2.example.com",
-      "measurement_id": "G-YYYYYYYYYY",
-      "property_id_env": "GA4_PROPERTY_ID_2",
-      "numeric_property_id": "GA4_PROPERTY_ID_2",
-      "revenue_role": "Support site for product help, downloads, and product navigation",
+      "id": "support",
+      "name": "Support or Docs Site",
+      "url": "support.example.com",
+      "measurement_id": "",
+      "property_id_env": "GA4_PROPERTY_ID_SUPPORT",
+      "numeric_property_id": "",
+      "revenue_role": "Support or documentation property for post-purchase demand and customer navigation",
       "value_signals": [
-        "Software download intent",
-        "Product page progression",
+        "Documentation demand",
+        "Download or help intent",
         "Post-purchase support journeys"
       ],
       "intent_path_keywords": [
-        "/hq",
+        "/docs",
+        "/support",
         "/download",
-        "/product",
-        "/support"
+        "/help",
+        "/knowledge"
       ],
-      "accent_color": "#da291c",
+      "accent_color": "#a8651a",
       "text_color": "#ffffff"
     },
     {
-      "id": "site3",
-      "name": "Product Site",
-      "url": "www.site3.example.com",
-      "measurement_id": "G-ZZZZZZZZZZ",
-      "property_id_env": "GA4_PROPERTY_ID_3",
-      "numeric_property_id": "GA4_PROPERTY_ID_3",
-      "revenue_role": "Product site for solution discovery and inquiry intent",
+      "id": "product",
+      "name": "Product or Tool Site",
+      "url": "product.example.com",
+      "measurement_id": "",
+      "property_id_env": "GA4_PROPERTY_ID_PRODUCT",
+      "numeric_property_id": "",
+      "revenue_role": "Product or tool property for solution discovery, usage depth, and inquiry intent",
       "value_signals": [
-        "Product-family exploration",
-        "Technical documentation access",
-        "Contact and quote intent"
+        "Solution exploration",
+        "Tool usage depth",
+        "Quote or account intent"
       ],
       "intent_path_keywords": [
-        "/products",
         "/product",
-        "/documentation",
-        "/contact",
+        "/tool",
         "/quote",
-        "/support"
+        "/signup",
+        "/account"
       ],
-      "accent_color": "#1a4b8c",
+      "accent_color": "#4f6475",
       "text_color": "#ffffff"
     }
   ]

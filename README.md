@@ -1,6 +1,8 @@
 # Analytics HQ
 
-Multi-site GA4 dashboard for multiple web properties, published via GitLab Pages.
+Connector-first GA4 reporting dashboard for multiple web properties, published with GitHub Pages.
+
+The default public page is a setup state, not a sample dashboard. Live metrics appear after a GA4 service account and numeric property IDs are configured.
 
 ## Pipeline
 
@@ -10,7 +12,8 @@ Stages:
 2. `fetch` - pull GA4 data per site into `data/*_raw.json`
 3. `analyze` - compute WoW deltas and summary datasets
 4. `report` - build alert JSON + render `public/` HTML
-5. `pages` - deploy `public/` to GitLab Pages
+5. `report` - render `public/` and the repository-root GitHub Pages HTML
+6. `commit` - publish updated static output when the workflow has changes
 
 ## Business Lens
 
@@ -29,7 +32,7 @@ Dashboard uses a clean, neutral design system:
 
 - Primary font stack: `Montserrat`, fallback `Arial`
 - Core palette:
-  - Accent green `#30DC30`
+  - Accent green `#2f6f5f`
   - Rich black `#000000`
   - Gray `#A2ACB4`
   - Dark gray `#2D3031`
@@ -38,21 +41,22 @@ Dashboard uses a clean, neutral design system:
 
 ## Required CI/CD Variables
 
-Set these in GitLab project CI/CD settings:
+Set these in GitHub Actions secrets:
 
-- `GA4_SERVICE_ACCOUNT_FILE` - service-account JSON as a **File** variable (preferred)
+- `GA4_SERVICE_ACCOUNT_JSON` - full service-account JSON as a text secret
 
 Alternative:
 
-- `GA4_SERVICE_ACCOUNT_JSON` - full service-account JSON as text variable
+- `GA4_SERVICE_ACCOUNT_FILE` - local/service runner path to a service-account JSON file
 
 Optional override vars (if you do not want IDs in repo config):
 
-- `GA4_PROPERTY_ID_1`
-- `GA4_PROPERTY_ID_2`
-- `GA4_PROPERTY_ID_3`
+- `GA4_PROPERTY_ID_PRIMARY`
+- `GA4_PROPERTY_ID_SUPPORT`
+- `GA4_PROPERTY_ID_PRODUCT`
 
 `fetch.py` uses env vars first, then `config/sites.json` `numeric_property_id`.
+Placeholder strings such as `GA4_PROPERTY_ID_1`, `G-XXXXXXXXXX`, and non-numeric values are treated as unconfigured.
 
 ## GA4 Access Checklist
 
@@ -61,7 +65,7 @@ Optional override vars (if you do not want IDs in repo config):
 3. Copy each GA4 numeric property ID from GA4 Admin and either:
    - set the optional override vars above, or
    - keep IDs in `config/sites.json`.
-4. Run the pipeline manually once (`Run pipeline`) and confirm all sites show `status: ok`.
+4. Run the GitHub Actions workflow manually once and confirm all sites show `status: ok`.
 
 ## Local Run
 

@@ -3,64 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Analytics HQ | Sample Dashboard</title>
-  <meta name="description" content="Multi-site GA4 analytics dashboard with cross-property performance tracking, behavior signals, and week-over-week trend analysis.">
-  <meta property="og:title" content="Analytics HQ | Sample Dashboard">
-  <meta property="og:description" content="Multi-site GA4 analytics dashboard with cross-property performance tracking, behavior signals, and week-over-week trend analysis.">
+  <title>Overview | Analytics HQ</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0b0b0b;
-      --surface: #141414;
-      --surface-alt: #1a1a1a;
-      --border: #222;
-      --accent: #8a9a7b;
-      --accent-light: #a3b394;
-      --text: #e0e0e0;
-      --text-muted: #888;
-      --text-heading: #f0f0f0;
-      --green: #8a9a7b;
-      --green-bg: rgba(138, 154, 123, 0.12);
-      --red: #c0392b;
-      --red-bg: rgba(192, 57, 43, 0.1);
-      --amber: #d4a24e;
-      --amber-bg: rgba(212, 162, 78, 0.1);
-      --white: #ffffff;
-      --nav-bg: #111;
-      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-      --bar-bg: #222;
+      --brand-black: #20221f;
+      --brand-green: #2f6f5f;
+      --brand-gray:  #626a60;
+      --brand-dark:  #20221f;
+      --brand-accent:#a8651a;
+
+      --navy:        #20221f;
+      --navy-light:  #364139;
+      --blue:        #2f6f5f;
+      --blue-light:  #1f5044;
+      --white:       #ffffff;
+      --off-white:   #f7f8f5;
+      --border:      #dce2d8;
+      --text:        #20221f;
+      --text-muted:  #626a60;
+      --green:       #2f6f5f;
+      --green-bg:    #e7f1ec;
+      --red:         #b7443e;
+      --red-bg:      #fff0ef;
+      --amber:       #9a5b11;
+      --amber-bg:    #fff4e8;
+      --pending-bg:  #f6f7f8;
+      --pending-border: #c8d0d5;
     }
 
-    [data-theme="light"] {
-      --bg: #f5f3f0;
-      --surface: #ffffff;
-      --surface-alt: #f9f8f6;
-      --border: #dde2ea;
-      --text: #2D3031;
-      --text-muted: #5f666b;
-      --text-heading: #1a1a1a;
-      --green-bg: #e9f5e4;
-      --red-bg: #fdecea;
-      --amber-bg: #fff4e8;
-      --nav-bg: #ffffff;
-      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-      --bar-bg: #eee;
-    }
-
-    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
+      font-family: "Montserrat", Arial, "Helvetica Neue", sans-serif;
+      background: var(--off-white);
       color: var(--text);
       font-size: 14px;
       line-height: 1.5;
-      transition: background 0.2s, color 0.2s;
     }
 
     /* NAV */
     nav {
-      background: var(--nav-bg);
+      background: #ffffff;
       border-bottom: 1px solid var(--border);
       padding: 0 32px;
       display: flex;
@@ -70,8 +53,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      transition: background 0.2s, border-color 0.2s;
+      box-shadow: none;
     }
     .nav-brand {
       text-decoration: none;
@@ -80,8 +62,13 @@
       align-items: center;
       gap: 12px;
     }
+    .nav-brand img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
     .nav-suite {
-      color: var(--text-heading);
+      color: var(--brand-dark);
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -89,7 +76,7 @@
     }
     .nav-links { display: flex; gap: 4px; }
     .nav-links a {
-      color: var(--text-muted);
+      color: #4f565c;
       text-decoration: none;
       font-size: 12px;
       padding: 7px 11px;
@@ -98,101 +85,69 @@
       transition: background 0.15s, color 0.15s, border-color 0.15s;
     }
     .nav-links a:hover {
-      background: var(--surface-alt);
-      color: var(--text);
-      border-color: var(--border);
+      background: #f2f5f5;
+      color: #1f2732;
+      border-color: #c8d0d5;
     }
     .nav-links a.active {
-      background: var(--green-bg);
-      color: var(--text-heading);
-      border-color: var(--accent);
-      box-shadow: inset 0 0 0 1px rgba(138, 154, 123, 0.25);
+      background: #eef9ee;
+      color: #1f2732;
+      border-color: var(--brand-green);
+      box-shadow: inset 0 0 0 1px rgba(47, 111, 95, 0.18);
     }
     .nav-spacer { flex: 1; }
     .nav-timestamp {
-      color: var(--text-muted);
+      color: #6b7378;
       font-size: 11px;
       white-space: nowrap;
-    }
-    .theme-toggle {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: 6px;
-      padding: 5px 10px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-      font-family: inherit;
-    }
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--text);
     }
 
     /* LAYOUT */
     .page-wrap { max-width: 1240px; margin: 0 auto; padding: 28px 24px 48px; }
 
-    /* SAMPLE BANNER */
-    .sample-banner {
-      background: var(--green-bg);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      padding: 12px 18px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      color: var(--accent-light);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    [data-theme="light"] .sample-banner { color: #4a5a3d; }
-    .sample-banner strong { font-weight: 700; }
-
     /* PAGE HEADER */
     .page-header { margin-bottom: 24px; }
     .page-header h1 {
+      font-family: "Montserrat", Arial, sans-serif;
       font-size: 30px;
       line-height: 1;
       letter-spacing: 0.01em;
       font-weight: 700;
-      color: var(--text-heading);
+      color: var(--brand-dark);
     }
-    .page-header p { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+    .page-header p  { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
 
     /* CARDS */
     .card {
-      background: var(--surface);
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 20px 24px;
       margin-bottom: 20px;
-      box-shadow: var(--card-shadow);
-      transition: background 0.2s, border-color 0.2s;
+      box-shadow: none;
     }
     .card-title {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--text-muted);
+      color: #4f565c;
       margin-bottom: 14px;
     }
 
     /* KPI GRID */
     .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
     .kpi-card {
-      background: var(--surface);
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 18px 20px;
-      box-shadow: var(--card-shadow);
-      transition: background 0.2s, border-color 0.2s;
+      box-shadow: none;
     }
     .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
-    .kpi-value { font-size: 28px; font-weight: 700; color: var(--text-heading); line-height: 1; }
-    .kpi-wow { font-size: 12px; margin-top: 6px; font-weight: 600; }
-    .trend-up { color: var(--green); }
+    .kpi-value { font-size: 28px; font-weight: 700; color: var(--brand-dark); line-height: 1; }
+    .kpi-wow   { font-size: 12px; margin-top: 6px; font-weight: 600; }
+    .trend-up   { color: var(--green); }
     .trend-down { color: var(--red); }
     .trend-flat { color: var(--text-muted); }
 
@@ -201,24 +156,139 @@
     th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); }
     td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: var(--surface-alt); }
+    tr:hover td { background: var(--off-white); }
     .num { text-align: right; font-variant-numeric: tabular-nums; }
 
     /* BAR */
-    .bar-wrap { background: var(--bar-bg); border-radius: 3px; height: 6px; min-width: 80px; }
-    .bar-fill { height: 6px; border-radius: 3px; background: var(--accent); }
+    .bar-wrap { background: var(--off-white); border-radius: 3px; height: 6px; min-width: 80px; }
+    .bar-fill  { height: 6px; border-radius: 3px; background: var(--brand-green); }
 
-    /* EXECUTIVE STRIP */
-    .executive-strip {
+    /* TWO COLUMN */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .section-nav {
+      position: sticky;
+      top: 72px;
+      z-index: 20;
+      margin-bottom: 16px;
+      background: rgba(244, 246, 249, 0.92);
+      backdrop-filter: blur(3px);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .section-nav a {
+      text-decoration: none;
+      font-size: 12px;
+      color: #243044;
+      border: 1px solid #c8d0d5;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: #ffffff;
+      font-weight: 600;
+    }
+    .section-nav a:hover {
+      background: #eef9ee;
+      border-color: var(--brand-green);
+      color: #1a2332;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .insight-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: #ffffff;
+    }
+    .insight-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .insight-value {
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 700;
+      color: var(--brand-dark);
+    }
+    .insight-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .table-footnote {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* PENDING STATE */
+    .pending-card {
+      background: var(--pending-bg);
+      border: 1px dashed var(--pending-border);
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .pending-card .pending-icon { font-size: 28px; margin-bottom: 10px; }
+    .pending-card h3 { font-size: 15px; color: var(--navy); margin-bottom: 6px; }
+    .pending-card p  { font-size: 13px; max-width: 360px; margin: 0 auto; }
+
+    /* ALERT BANNER */
+    .alert-banner { border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
+    .alert-critical { background: var(--red-bg); border: 1px solid #f5c6c2; }
+    .alert-warning  { background: var(--amber-bg); border: 1px solid #f5ddb0; }
+    .alert-icon { font-size: 15px; flex-shrink: 0; line-height: 1.4; }
+    .alert-body strong { display: block; font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+
+    /* SITE COLOR STRIP */
+    .site-strip {
+      height: 4px;
+      border-radius: 4px 4px 0 0;
+      margin: -20px -24px 16px;
+    }
+
+    /* SECTION LABEL */
+    .section-28d {
+      background: #f4f6f7;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 20px;
+      display: flex;
+      gap: 40px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .section-28d .metric { display: flex; flex-direction: column; gap: 2px; }
+    .section-28d .metric-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+    .section-28d .metric-value { font-size: 18px; font-weight: 700; color: var(--brand-dark); }
+
+    /* EXECUTIVE BLOCKS */
+    .executive-strip {
+      border: 1px solid #c8d0d5;
+      border-radius: 8px;
       padding: 16px 18px;
       margin-bottom: 20px;
-      background: var(--surface);
-      transition: background 0.2s, border-color 0.2s;
+      background: #ffffff;
     }
     .executive-strip h2 {
-      color: var(--text-heading);
+      font-family: "Montserrat", Arial, sans-serif;
+      color: var(--brand-dark);
       font-size: 21px;
       margin-bottom: 4px;
     }
@@ -233,97 +303,135 @@
       gap: 10px;
     }
     .exec-kpi {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--surface-alt);
+      border: 1px solid #d2d9dd;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
       padding: 10px 12px;
-      transition: background 0.2s, border-color 0.2s;
     }
     .exec-kpi .label {
       font-size: 10px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #5f666b;
       font-weight: 700;
       margin-bottom: 6px;
     }
     .exec-kpi .value {
       font-size: 23px;
       line-height: 1;
-      color: var(--text-heading);
+      color: var(--brand-dark);
       font-weight: 700;
     }
     .exec-kpi .sub {
       margin-top: 5px;
       font-size: 12px;
-      color: var(--text-muted);
+      color: #5f666b;
       font-weight: 600;
     }
-
-    /* CX CHIPS */
     .cx-chip {
       display: inline-block;
-      border: 1px solid var(--border);
-      background: var(--surface-alt);
-      color: var(--text-muted);
+      border: 1px solid #c8d0d5;
+      background: #f5f7f7;
+      color: #3e474f;
       border-radius: 999px;
       padding: 2px 8px;
       font-size: 11px;
       font-weight: 600;
-      transition: background 0.2s, border-color 0.2s;
     }
 
-    /* SECTION NAV */
-    .section-nav {
-      margin-bottom: 16px;
-      background: var(--surface);
+    .setup-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+    .setup-panel {
+      background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      transition: background 0.2s, border-color 0.2s;
+      border-radius: 8px;
+      padding: 18px 20px;
     }
-    .section-nav a {
-      text-decoration: none;
-      font-size: 12px;
-      color: var(--text);
+    .setup-panel h2 {
+      color: var(--brand-dark);
+      font-size: 18px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .setup-panel p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .setup-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .setup-card {
+      background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 5px 10px;
-      background: var(--surface-alt);
-      font-weight: 600;
-      transition: background 0.15s, border-color 0.15s;
+      border-radius: 8px;
+      padding: 14px;
     }
-    .section-nav a:hover {
-      background: var(--green-bg);
-      border-color: var(--accent);
+    .setup-card.ready {
+      border-color: #b8d0c5;
+      background: #fbfdfb;
     }
-
-    /* DOT */
-    .dot {
+    .setup-card.pending {
+      border-color: #e2d0ad;
+      background: #fffdf8;
+    }
+    .setup-state {
       display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: 8px;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: #f0f2ef;
+      margin-bottom: 10px;
+    }
+    .setup-card.ready .setup-state {
+      color: var(--blue-light);
+      background: var(--green-bg);
+    }
+    .setup-card.pending .setup-state {
+      color: var(--amber);
+      background: var(--amber-bg);
+    }
+    .setup-card h3 {
+      color: var(--brand-dark);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .setup-card p {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    .empty-preview {
+      background: #ffffff;
+      border: 1px dashed #c8d0d5;
+      border-radius: 8px;
+      padding: 22px;
+      margin-bottom: 20px;
+      color: var(--text-muted);
+    }
+    .empty-preview strong {
+      color: var(--brand-dark);
     }
 
     /* FOOTER */
     footer {
       text-align: center;
-      color: var(--text-muted);
+      color: #6b7378;
       font-size: 11px;
       padding: 20px;
       border-top: 1px solid var(--border);
       margin-top: 40px;
     }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    footer a:hover { text-decoration: underline; }
 
     @media (max-width: 980px) {
       nav { padding: 0 16px; gap: 12px; }
@@ -332,429 +440,446 @@
       .page-wrap { padding: 16px 14px 34px; }
       .nav-suite { display: none; }
       .kpi-grid { grid-template-columns: 1fr; }
-      .section-nav { flex-wrap: wrap; }
+      .two-col { grid-template-columns: 1fr; }
+      .three-col { grid-template-columns: 1fr; }
+      .section-nav {
+        position: static;
+        top: auto;
+      }
+      .insight-grid {
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+      }
+      .section-28d { flex-direction: column; gap: 12px; }
       .exec-kpi-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
-      .page-header h1 { font-size: 24px; }
+      .page-header h1 { font-size: 28px; }
+      .setup-hero { grid-template-columns: 1fr; }
+      .setup-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .setup-grid { grid-template-columns: 1fr; }
     }
   </style>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 </head>
 <body>
 
 <nav>
-  <a href="#" class="nav-brand">
+  <a href="./index.html" class="nav-brand">
     <span class="nav-suite">Analytics HQ</span>
   </a>
   <div class="nav-links">
-    <a href="#" class="active" data-site="overview">Overview</a>
-    <a href="#northwind" data-site="northwind">Northwind Corp</a>
-    <a href="#cascadia" data-site="cascadia">Cascadia Labs</a>
-    <a href="#mesa" data-site="mesa">Mesa Supply Co</a>
+    <a href="./index.html" class="active">Overview</a>
+    
+    <a href="./primary/index.html" >Primary Website</a>
+    
+    <a href="./support/index.html" >Support or Docs Site</a>
+    
+    <a href="./product/index.html" >Product or Tool Site</a>
+    
   </div>
   <div class="nav-spacer"></div>
-  <span class="nav-timestamp">Mar 10, 2026 09:00 AM PST</span>
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light and dark mode">Light</button>
+  <span class="nav-timestamp">June 05, 2026 at 23:05 UTC</span>
 </nav>
 
 <div class="page-wrap">
+  
+<div class="page-header">
+  <h1>Connect GA4. Ship stakeholder reports automatically.</h1>
+  <p>Analytics HQ turns configured GA4 properties into weekly-ready site performance reports. Until credentials and property IDs are connected, this page shows the setup state instead of fake metrics.</p>
+</div>
 
-  <div class="sample-banner">
-    <strong>Sample Output</strong> This is a demo of the Analytics HQ dashboard using fictional data. The actual pipeline connects to GA4 properties and generates reports automatically.
+
+  
+    
+<div class="alert-banner alert-warning">
+  <span class="alert-icon">&#8505;</span>
+  <div class="alert-body">
+    <strong>Primary Website &mdash; Pending Setup</strong>
+    GA4 property ID is missing. Set GA4_PROPERTY_ID_PRIMARY in GitHub Actions secrets or numeric_property_id in config/sites.json.
   </div>
+</div>
 
-  <div class="page-header">
-    <h1>Stakeholder Site Performance Dashboard</h1>
-    <p>Cross-site performance and customer behavior signals from GA4.</p>
+<div class="alert-banner alert-warning">
+  <span class="alert-icon">&#8505;</span>
+  <div class="alert-body">
+    <strong>Support or Docs Site &mdash; Pending Setup</strong>
+    GA4 property ID is missing. Set GA4_PROPERTY_ID_SUPPORT in GitHub Actions secrets or numeric_property_id in config/sites.json.
   </div>
+</div>
 
-  <!-- EXECUTIVE SUMMARY -->
-  <div class="executive-strip">
-    <h2>Cross-Site Summary</h2>
-    <p>Last 7 days across all configured properties.</p>
-    <div class="exec-kpi-grid">
-      <div class="exec-kpi">
-        <div class="label">Sessions (7d)</div>
-        <div class="value">18,492</div>
-        <div class="sub trend-up">+8.3% vs prior week</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">Users (7d)</div>
-        <div class="value">12,847</div>
-        <div class="sub">Active audience breadth</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">Pageviews (7d)</div>
-        <div class="value">47,210</div>
-        <div class="sub">Consumption depth</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">Intent Views (7d)</div>
-        <div class="value">3,841</div>
-        <div class="sub">High-value path demand</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">Sites Reporting</div>
-        <div class="value">3</div>
-        <div class="sub">Properties with live GA4 data</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">Avg Engagement</div>
-        <div class="value">62.4%</div>
-        <div class="sub">Cross-site average engagement rate</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">Pages / Session</div>
-        <div class="value">2.55</div>
-        <div class="sub">Depth across all sessions</div>
-      </div>
-      <div class="exec-kpi">
-        <div class="label">New User Share</div>
-        <div class="value">58.1%</div>
-        <div class="sub">Average audience acquisition mix</div>
-      </div>
+<div class="alert-banner alert-warning">
+  <span class="alert-icon">&#8505;</span>
+  <div class="alert-body">
+    <strong>Product or Tool Site &mdash; Pending Setup</strong>
+    GA4 property ID is missing. Set GA4_PROPERTY_ID_PRODUCT in GitHub Actions secrets or numeric_property_id in config/sites.json.
+  </div>
+</div>
+
+  
+
+
+<div class="setup-hero">
+  <div class="setup-panel">
+    <h2>Built for operators who need the report without the spreadsheet chase.</h2>
+    <p>Configure a service account, add numeric GA4 property IDs, and let the pipeline fetch traffic, engagement, device, channel, and high-intent path signals into static GitHub Pages reports.</p>
+  </div>
+  <div class="setup-panel">
+    <h2>Current connection state</h2>
+    <p>0 of 3 configured properties are reporting live GA4 data. Live metrics appear after connection.</p>
+  </div>
+</div>
+
+<div class="setup-grid" aria-label="Analytics HQ setup checklist">
+  <div class="setup-card pending">
+    <span class="setup-state">Pending</span>
+    <h3>GA4 service account</h3>
+    <p>Set <code>GA4_SERVICE_ACCOUNT_JSON</code> or <code>GA4_SERVICE_ACCOUNT_FILE</code> in GitHub Actions.</p>
+  </div>
+  <div class="setup-card pending">
+    <span class="setup-state">Pending</span>
+    <h3>Property IDs</h3>
+    <p>0 of 3 numeric GA4 property IDs are configured.</p>
+  </div>
+  <div class="setup-card ready">
+    <span class="setup-state">Ready</span>
+    <h3>Scheduled report</h3>
+    <p>GitHub Actions can refresh the static report on schedule or by manual dispatch.</p>
+  </div>
+  <div class="setup-card ready">
+    <span class="setup-state">Ready</span>
+    <h3>Alerts config</h3>
+    <p>Optional thresholds flag session drops, engagement shifts, and high-priority changes.</p>
+  </div>
+</div>
+
+
+<div class="empty-preview">
+  <strong>Live metrics appear after connection.</strong>
+  The cards and tables below are wired to the generated GA4 pipeline, but no configured property is reporting yet. This default state is intentionally blank rather than filled with invented metrics.
+</div>
+
+
+<div class="executive-strip">
+  <h2>Cross-site summary</h2>
+  <p>Last 7 days across connected GA4 properties.</p>
+  <div class="exec-kpi-grid">
+    <div class="exec-kpi">
+      <div class="label">Sessions (7d)</div>
+      <div class="value">--</div>
+      <div class="sub trend-flat">-- vs prior week</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Users (7d)</div>
+      <div class="value">--</div>
+      <div class="sub">Active audience breadth</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Pageviews (7d)</div>
+      <div class="value">--</div>
+      <div class="sub">Consumption depth</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Intent Views (7d)</div>
+      <div class="value">--</div>
+      <div class="sub">High-value path demand</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Sites Reporting</div>
+      <div class="value">0</div>
+      <div class="sub">Properties with live GA4 data</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Avg Engagement</div>
+      <div class="value">--</div>
+      <div class="sub">Cross-site average engagement rate</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">Pages / Session</div>
+      <div class="value">--</div>
+      <div class="sub">Depth across all sessions</div>
+    </div>
+    <div class="exec-kpi">
+      <div class="label">New User Share</div>
+      <div class="value">--</div>
+      <div class="sub">Average audience acquisition mix</div>
     </div>
   </div>
+</div>
 
-  <!-- SECTION NAV -->
-  <div class="section-nav">
-    <a href="#behavior-signals">Behavior Signals</a>
-    <a href="#comparison-7d">7-Day Comparison</a>
-    <a href="#engagement-audience">Engagement and Audience</a>
-    <a href="#device-split">Device Split</a>
-  </div>
+<div class="section-nav" style="position: static; top: auto;">
+  <a href="#behavior-signals">Behavior Signals</a>
+  <a href="#comparison-7d">7-Day Comparison</a>
+  <a href="#engagement-audience">Engagement and Audience</a>
+  <a href="#device-split">Device Split</a>
+</div>
 
-  <!-- SITE CARDS -->
-  <div class="kpi-grid" style="margin-bottom: 24px;">
-    <!-- Northwind Corp -->
-    <div id="northwind" class="kpi-card" style="border-top: 4px solid #4a90d9;">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-        <div class="kpi-label" style="margin-bottom:0;">Northwind Corp</div>
-        <span style="font-size:11px; color:var(--accent);">Property Detail</span>
-      </div>
-      <div class="kpi-value">8,214</div>
-      <div class="kpi-wow trend-up">+12.1% sessions vs last week</div>
-      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
-        Primary revenue driver: e-commerce catalog and wholesale ordering
-      </div>
-      <div style="margin-top:8px;">
-        <span class="cx-chip">Intent share: 34.2%</span>
-        <span class="cx-chip">Primary channel: Organic Search</span>
-      </div>
+<div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 24px;">
+  
+  
+  <div class="kpi-card" style="border-top: 4px solid #2f6f5f;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <div class="kpi-label" style="margin-bottom:0;">Primary Website</div>
+      <a href="primary/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
     </div>
-
-    <!-- Cascadia Labs -->
-    <div id="cascadia" class="kpi-card" style="border-top: 4px solid #e67e22;">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-        <div class="kpi-label" style="margin-bottom:0;">Cascadia Labs</div>
-        <span style="font-size:11px; color:var(--accent);">Property Detail</span>
-      </div>
-      <div class="kpi-value">6,731</div>
-      <div class="kpi-wow trend-up">+5.7% sessions vs last week</div>
-      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
-        Lead generation for laboratory testing services
-      </div>
-      <div style="margin-top:8px;">
-        <span class="cx-chip">Intent share: 28.6%</span>
-        <span class="cx-chip">Primary channel: Direct</span>
-      </div>
+    
+      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
+      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+    
+  </div>
+  
+  
+  <div class="kpi-card" style="border-top: 4px solid #a8651a;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <div class="kpi-label" style="margin-bottom:0;">Support or Docs Site</div>
+      <a href="support/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
     </div>
-
-    <!-- Mesa Supply Co -->
-    <div id="mesa" class="kpi-card" style="border-top: 4px solid #8a9a7b;">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-        <div class="kpi-label" style="margin-bottom:0;">Mesa Supply Co</div>
-        <span style="font-size:11px; color:var(--accent);">Property Detail</span>
-      </div>
-      <div class="kpi-value">3,547</div>
-      <div class="kpi-wow trend-down">-2.4% sessions vs last week</div>
-      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
-        Product catalog and dealer locator for industrial supplies
-      </div>
-      <div style="margin-top:8px;">
-        <span class="cx-chip">Intent share: 41.8%</span>
-        <span class="cx-chip">Primary channel: Paid Search</span>
-      </div>
+    
+      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
+      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+    
+  </div>
+  
+  
+  <div class="kpi-card" style="border-top: 4px solid #4f6475;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <div class="kpi-label" style="margin-bottom:0;">Product or Tool Site</div>
+      <a href="product/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
     </div>
+    
+      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
+      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+    
   </div>
+  
+</div>
 
-  <!-- BEHAVIOR SIGNALS -->
-  <div class="card" id="behavior-signals">
-    <div class="card-title">Customer Behavior Signals</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th>Business Role</th>
-          <th class="num">Intent Views (7d)</th>
-          <th>Primary Channel</th>
-          <th>Top Intent Page</th>
-          <th class="num">Momentum</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <span class="dot" style="background:#4a90d9;"></span><strong>Northwind Corp</strong>
-            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">northwindcorp.com</div>
-          </td>
-          <td style="font-size:12px;">E-commerce catalog, wholesale ordering</td>
-          <td class="num">
-            1,642
-            <div style="font-size:11px; color:var(--text-muted);">34.2% of top-page demand</div>
-          </td>
-          <td>
-            <strong>Organic Search</strong>
-            <div style="font-size:11px; color:var(--text-muted);">52% share</div>
-          </td>
-          <td style="font-size:12px;">/products/catalog</td>
-          <td class="num trend-up"><strong>+12.1%</strong></td>
-        </tr>
-        <tr>
-          <td>
-            <span class="dot" style="background:#e67e22;"></span><strong>Cascadia Labs</strong>
-            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">cascadialabs.io</div>
-          </td>
-          <td style="font-size:12px;">Lead generation, testing services</td>
-          <td class="num">
-            1,103
-            <div style="font-size:11px; color:var(--text-muted);">28.6% of top-page demand</div>
-          </td>
-          <td>
-            <strong>Direct</strong>
-            <div style="font-size:11px; color:var(--text-muted);">38% share</div>
-          </td>
-          <td style="font-size:12px;">/services/request-quote</td>
-          <td class="num trend-up"><strong>+5.7%</strong></td>
-        </tr>
-        <tr>
-          <td>
-            <span class="dot" style="background:#8a9a7b;"></span><strong>Mesa Supply Co</strong>
-            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">mesasupply.com</div>
-          </td>
-          <td style="font-size:12px;">Product catalog, dealer locator</td>
-          <td class="num">
-            1,096
-            <div style="font-size:11px; color:var(--text-muted);">41.8% of top-page demand</div>
-          </td>
-          <td>
-            <strong>Paid Search</strong>
-            <div style="font-size:11px; color:var(--text-muted);">44% share</div>
-          </td>
-          <td style="font-size:12px;">/dealers/find-location</td>
-          <td class="num trend-down"><strong>-2.4%</strong></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="card" id="behavior-signals">
+  <div class="card-title">Customer Behavior Signals</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Business Role</th>
+        <th class="num">Intent Views (7d)</th>
+        <th>Primary Channel</th>
+        <th>Top Intent Page</th>
+        <th class="num">Momentum</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+      <tr>
+        <td>
+          <a href="primary/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>
+            Primary Website
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">example.com</div>
+        </td>
+        
+          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td>
+          <a href="support/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>
+            Support or Docs Site
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">support.example.com</div>
+        </td>
+        
+          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td>
+          <a href="product/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>
+            Product or Tool Site
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">product.example.com</div>
+        </td>
+        
+          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
 
-  <!-- 7-DAY COMPARISON -->
-  <div class="card" id="comparison-7d">
-    <div class="card-title">7-Day Comparison</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th class="num">Sessions (7d)</th>
-          <th class="num">Users (7d)</th>
-          <th class="num">Pageviews (7d)</th>
-          <th class="num">Sessions (28d)</th>
-          <th class="num">WoW Change</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <span class="dot" style="background:#4a90d9;"></span><strong>Northwind Corp</strong>
-            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">northwindcorp.com</div>
-          </td>
-          <td class="num">8,214</td>
-          <td class="num">5,891</td>
-          <td class="num">22,340</td>
-          <td class="num">30,126</td>
-          <td class="num trend-up"><strong>+12.1%</strong></td>
-        </tr>
-        <tr>
-          <td>
-            <span class="dot" style="background:#e67e22;"></span><strong>Cascadia Labs</strong>
-            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">cascadialabs.io</div>
-          </td>
-          <td class="num">6,731</td>
-          <td class="num">4,502</td>
-          <td class="num">16,284</td>
-          <td class="num">25,810</td>
-          <td class="num trend-up"><strong>+5.7%</strong></td>
-        </tr>
-        <tr>
-          <td>
-            <span class="dot" style="background:#8a9a7b;"></span><strong>Mesa Supply Co</strong>
-            <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">mesasupply.com</div>
-          </td>
-          <td class="num">3,547</td>
-          <td class="num">2,454</td>
-          <td class="num">8,586</td>
-          <td class="num">15,230</td>
-          <td class="num trend-down"><strong>-2.4%</strong></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="card" id="comparison-7d">
+  <div class="card-title">7-Day Comparison</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th class="num">Sessions (7d)</th>
+        <th class="num">Users (7d)</th>
+        <th class="num">Pageviews (7d)</th>
+        <th class="num">Sessions (28d)</th>
+        <th class="num">WoW Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+      <tr>
+        <td>
+          <a href="primary/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>
+            Primary Website
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">example.com</div>
+        </td>
+        
+          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td>
+          <a href="support/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>
+            Support or Docs Site
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">support.example.com</div>
+        </td>
+        
+          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td>
+          <a href="product/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>
+            Product or Tool Site
+          </a>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">product.example.com</div>
+        </td>
+        
+          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
 
-  <!-- ENGAGEMENT & AUDIENCE -->
-  <div class="card" id="engagement-audience">
-    <div class="card-title">Engagement and Audience Mix (7d)</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th class="num">Engagement Rate</th>
-          <th class="num">Avg Session Duration</th>
-          <th class="num">Pages / Session</th>
-          <th class="num">New Users</th>
-          <th class="num">Returning Users</th>
-          <th class="num">14-Day Session Trend</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="dot" style="background:#4a90d9;"></span><strong>Northwind Corp</strong></td>
-          <td class="num">68.2%</td>
-          <td class="num">2m 14s</td>
-          <td class="num">2.72</td>
-          <td class="num">54.3%</td>
-          <td class="num">45.7%</td>
-          <td class="num trend-up"><strong>+9.8%</strong></td>
-        </tr>
-        <tr>
-          <td><span class="dot" style="background:#e67e22;"></span><strong>Cascadia Labs</strong></td>
-          <td class="num">61.5%</td>
-          <td class="num">1m 48s</td>
-          <td class="num">2.42</td>
-          <td class="num">63.1%</td>
-          <td class="num">36.9%</td>
-          <td class="num trend-up"><strong>+3.2%</strong></td>
-        </tr>
-        <tr>
-          <td><span class="dot" style="background:#8a9a7b;"></span><strong>Mesa Supply Co</strong></td>
-          <td class="num">57.4%</td>
-          <td class="num">1m 32s</td>
-          <td class="num">2.42</td>
-          <td class="num">56.8%</td>
-          <td class="num">43.2%</td>
-          <td class="num trend-down"><strong>-4.1%</strong></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="card" id="engagement-audience">
+  <div class="card-title">Engagement and Audience Mix (7d)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th class="num">Engagement Rate</th>
+        <th class="num">Avg Session Duration</th>
+        <th class="num">Pages / Session</th>
+        <th class="num">New Users</th>
+        <th class="num">Returning Users</th>
+        <th class="num">14-Day Session Trend</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+      <tr>
+        <td>
+          <a href="primary/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>
+            Primary Website
+          </a>
+        </td>
+        
+          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td>
+          <a href="support/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>
+            Support or Docs Site
+          </a>
+        </td>
+        
+          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td>
+          <a href="product/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>
+            Product or Tool Site
+          </a>
+        </td>
+        
+          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
 
-  <!-- DEVICE SPLIT -->
-  <div class="card" id="device-split">
-    <div class="card-title">Device Split (7-Day)</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th>Desktop</th>
-          <th>Mobile</th>
-          <th>Tablet</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="dot" style="background:#4a90d9;"></span>Northwind Corp</td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">62%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:62%; background:#4a90d9;"></div></div>
-          </td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">31%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:31%; background:#4a90d9;"></div></div>
-          </td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">7%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:7%; background:#4a90d9;"></div></div>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="dot" style="background:#e67e22;"></span>Cascadia Labs</td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">55%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:55%; background:#e67e22;"></div></div>
-          </td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">38%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:38%; background:#e67e22;"></div></div>
-          </td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">7%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:7%; background:#e67e22;"></div></div>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="dot" style="background:#8a9a7b;"></span>Mesa Supply Co</td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">48%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:48%; background:#8a9a7b;"></div></div>
-          </td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">44%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:44%; background:#8a9a7b;"></div></div>
-          </td>
-          <td>
-            <div style="font-size:13px; font-weight:600; margin-bottom:3px;">8%</div>
-            <div class="bar-wrap"><div class="bar-fill" style="width:8%; background:#8a9a7b;"></div></div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="card" id="device-split">
+  <div class="card-title">Device Split (7-Day)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Desktop</th>
+        <th>Mobile</th>
+        <th>Tablet</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+      <tr>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>Primary Website</td>
+        
+          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>Support or Docs Site</td>
+        
+          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+        
+      </tr>
+      
+      
+      <tr>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>Product or Tool Site</td>
+        
+          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
 
 </div>
 
 <footer>
-  Analytics HQ | Generated by automated pipeline | <a href="https://github.com/sbc1-code/analytics-hq" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+  Analytics HQ &mdash; Generated by GitHub Actions &mdash; June 05, 2026 at 23:05 UTC
 </footer>
-
-<script>
-  // Theme toggle with localStorage persistence
-  function setTheme(mode) {
-    const html = document.documentElement;
-    const btn = document.querySelector('.theme-toggle');
-    if (mode === 'light') {
-      html.setAttribute('data-theme', 'light');
-      btn.textContent = 'Dark';
-    } else {
-      html.removeAttribute('data-theme');
-      btn.textContent = 'Light';
-    }
-    localStorage.setItem('ahq_theme', mode);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    setTheme(current === 'light' ? 'dark' : 'light');
-  }
-  // Init theme from localStorage or system preference
-  (function() {
-    const stored = localStorage.getItem('ahq_theme');
-    if (stored) { setTheme(stored); }
-    else if (window.matchMedia('(prefers-color-scheme: light)').matches) { setTheme('light'); }
-  })();
-
-  // Nav link active state + smooth scroll
-  document.querySelectorAll('.nav-links a').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
-      link.classList.add('active');
-      var target = link.getAttribute('href');
-      if (target && target !== '#') {
-        var el = document.querySelector(target);
-        if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  });
-</script>
 
 </body>
 </html>

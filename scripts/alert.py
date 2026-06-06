@@ -34,9 +34,10 @@ for site in sites:
     if data.get("status") != "ok":
         reason = data.get("reason", "unknown")
         if reason == "ga4_credentials_not_configured":
-            message = "GA4 credentials not configured. Set GA4_SERVICE_ACCOUNT_FILE (preferred) or GA4_SERVICE_ACCOUNT_JSON in CI/CD variables."
+            message = "GA4 credentials not configured. Set GA4_SERVICE_ACCOUNT_JSON or GA4_SERVICE_ACCOUNT_FILE in GitHub Actions secrets."
         elif reason == "property_id_not_configured":
-            message = f"GA4 property ID is missing. Set GA4_PROPERTY_ID_{site_id.upper()} in CI/CD variables or numeric_property_id in config/sites.json."
+            property_env = site.get("property_id_env") or f"GA4_PROPERTY_ID_{site_id.upper()}"
+            message = f"GA4 property ID is missing. Set {property_env} in GitHub Actions secrets or numeric_property_id in config/sites.json."
         elif reason.startswith("api_error"):
             message = f"GA4 API error: {reason}"
         elif reason == "ga4_library_error":
@@ -44,7 +45,7 @@ for site in sites:
         elif reason == "credentials_write_error":
             message = "Could not write GA4 credentials temp file in runner environment."
         elif reason == "credentials_file_not_found":
-            message = "GA4_SERVICE_ACCOUNT_FILE path was not found in runner environment. Check CI/CD variable type and scope."
+            message = "GA4_SERVICE_ACCOUNT_FILE path was not found in the runner environment. Check the configured secret value and scope."
         else:
             message = f"Data unavailable: {reason}"
         alerts.append({

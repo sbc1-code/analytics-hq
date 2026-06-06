@@ -20,13 +20,13 @@
 {% if data.status != "ok" %}
 
 <div class="pending-card">
-  <div class="pending-icon">&#128202;</div>
-  <h3>Analytics Pending</h3>
+  <div class="pending-icon">GA4</div>
+  <h3>GA4 connection pending</h3>
   <p>
     {% if data.reason == "property_id_not_configured" %}
-      GA4 numeric property ID has not been set for this site. Set <code>GA4_PROPERTY_ID_{{ data.site_id | upper }}</code> in CI/CD variables (or update <code>config/sites.json</code>), then add the service account as a Viewer on the property.
+      GA4 numeric property ID has not been set for this site. Set <code>{{ site.property_id_env or ('GA4_PROPERTY_ID_' ~ data.site_id | upper) }}</code> in GitHub Actions secrets (or update <code>config/sites.json</code>), then add the service account as a Viewer on the property.
     {% elif data.reason == "ga4_credentials_not_configured" %}
-      The <code>GA4_SERVICE_ACCOUNT_FILE</code> (preferred) or <code>GA4_SERVICE_ACCOUNT_JSON</code> CI/CD variable has not been configured. Once credentials are in place, this page will populate automatically on the next pipeline run.
+      The <code>GA4_SERVICE_ACCOUNT_JSON</code> or <code>GA4_SERVICE_ACCOUNT_FILE</code> GitHub Actions secret has not been configured. Once credentials are in place, this page will populate automatically on the next workflow run.
     {% else %}
       Data is not yet available for this property. Reason: {{ data.reason }}.
     {% endif %}
