@@ -16,8 +16,47 @@ DATA_DIR = Path("data")
 CONFIG_PATH = Path("config/sites.json")
 
 
+def load_config():
+    return json.loads(CONFIG_PATH.read_text())
+
+
 def load_sites():
-    return json.loads(CONFIG_PATH.read_text())["sites"]
+    return load_config()["sites"]
+
+
+def demo_enabled():
+    """Demo mode renders a sample dashboard when no live GA4 config exists.
+
+    Explicit override via ANALYTICS_HQ_DEMO (1/0); otherwise the config flag
+    demo_when_unconfigured decides.
+    """
+    flag = os.environ.get("ANALYTICS_HQ_DEMO", "").strip().lower()
+    if flag in ("1", "true", "yes", "on"):
+        return True
+    if flag in ("0", "false", "no", "off"):
+        return False
+    return bool(load_config().get("demo_when_unconfigured", False))
+
+
+def has_live_config(sites):
+    """True only when real credentials AND at least one numeric property exist."""
+    creds = (
+        os.environ.get("GA4_SERVICE_ACCOUNT_JSON", "").strip()
+        or os.environ.get("GA4_SERVICE_ACCOUNT_FILE", "").strip()
+    )
+    any_property = any(resolve_property_id(site) for site in sites)
+    return bool(creds and any_property)
+
+
+def write_demo(sites):
+    """Write deterministic sample raw data for every site (demo mode)."""
+    from demo_data import build_demo_raw
+
+    DATA_DIR.mkdir(exist_ok=True)
+    for site in sites:
+        raw = build_demo_raw(site)
+        (DATA_DIR / f"{site['id']}_raw.json").write_text(json.dumps(raw, indent=2))
+        print(f"  [{site['id']}] demo sample written -- sessions 7d: {raw['core']['current_7d']['sessions']}")
 
 
 def write_unavailable(site_id, reason):
@@ -359,6 +398,13 @@ def fetch_site(client, site):
 def main():
     DATA_DIR.mkdir(exist_ok=True)
     sites = load_sites()
+
+    if not has_live_config(sites) and demo_enabled():
+        print("No live GA4 config detected -- writing sample (demo) data.")
+        write_demo(sites)
+        print("fetch.py done (demo mode).")
+        return 0
+
     creds_path, should_cleanup = prepare_credentials(sites)
 
     if not creds_path:

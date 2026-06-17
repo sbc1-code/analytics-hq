@@ -245,6 +245,7 @@ for site in sites:
 
     analyzed = {
         "status": "ok",
+        "demo": bool(raw.get("demo")),
         "site_id": site_id,
         "site": site,
         "generated_at": raw["generated_at"],
@@ -302,6 +303,7 @@ for site in sites:
     overview_rows.append({
         "site": site,
         "status": "ok",
+        "demo": bool(raw.get("demo")),
         "sessions_7d": {"raw": c7["sessions"], "display": fmt_num(c7["sessions"]), "wow": sessions_wow},
         "users_7d":    {"raw": c7["activeUsers"], "display": fmt_num(c7["activeUsers"])},
         "pageviews_7d":{"raw": c7["screenPageViews"], "display": fmt_num(c7["screenPageViews"])},
@@ -336,6 +338,7 @@ for site in sites:
 
 overview = {
     "generated_at": datetime.now(timezone.utc).isoformat(),
+    "demo": any(r.get("demo") for r in overview_rows),
     "sites": overview_rows
 }
 (DATA_DIR / "overview_analyzed.json").write_text(json.dumps(overview, indent=2))

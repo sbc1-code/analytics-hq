@@ -1,70 +1,64 @@
 {
+  "demo_when_unconfigured": true,
   "sites": [
     {
       "id": "primary",
-      "name": "Primary Website",
-      "url": "example.com",
+      "name": "Acme Cloud — Marketing Site",
+      "url": "acmecloud.com",
       "measurement_id": "",
       "property_id_env": "GA4_PROPERTY_ID_PRIMARY",
       "numeric_property_id": "",
-      "revenue_role": "Primary public site for brand discovery, content engagement, and contact intent",
+      "revenue_role": "Top-of-funnel brand and demand site for discovery, content engagement, and demo intent",
       "value_signals": [
-        "Contact intent",
-        "Product or service discovery",
+        "Demo and contact intent",
+        "Product and pricing discovery",
         "High-value content paths"
       ],
       "intent_path_keywords": [
-        "/contact",
-        "/demo",
         "/pricing",
-        "/products",
-        "/services"
+        "/demo",
+        "/contact"
       ],
       "accent_color": "#2f6f5f",
       "text_color": "#ffffff"
     },
     {
       "id": "support",
-      "name": "Support or Docs Site",
-      "url": "support.example.com",
+      "name": "Acme Cloud — Docs & Support",
+      "url": "docs.acmecloud.com",
       "measurement_id": "",
       "property_id_env": "GA4_PROPERTY_ID_SUPPORT",
       "numeric_property_id": "",
-      "revenue_role": "Support or documentation property for post-purchase demand and customer navigation",
+      "revenue_role": "Documentation and support property for activation, post-sale enablement, and retention",
       "value_signals": [
         "Documentation demand",
-        "Download or help intent",
+        "Download and help intent",
         "Post-purchase support journeys"
       ],
       "intent_path_keywords": [
-        "/docs",
-        "/support",
         "/download",
-        "/help",
-        "/knowledge"
+        "/help/billing"
       ],
       "accent_color": "#a8651a",
       "text_color": "#ffffff"
     },
     {
       "id": "product",
-      "name": "Product or Tool Site",
-      "url": "product.example.com",
+      "name": "Acme Cloud — Web App",
+      "url": "app.acmecloud.com",
       "measurement_id": "",
       "property_id_env": "GA4_PROPERTY_ID_PRODUCT",
       "numeric_property_id": "",
-      "revenue_role": "Product or tool property for solution discovery, usage depth, and inquiry intent",
+      "revenue_role": "In-product property for signup, account, and expansion intent inside the app",
       "value_signals": [
-        "Solution exploration",
-        "Tool usage depth",
-        "Quote or account intent"
+        "Signup and trial intent",
+        "Account and billing activity",
+        "Quote and expansion intent"
       ],
       "intent_path_keywords": [
-        "/product",
-        "/tool",
-        "/quote",
         "/signup",
-        "/account"
+        "/quote",
+        "/account/billing"
       ],
       "accent_color": "#4f6475",
       "text_color": "#ffffff"

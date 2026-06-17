@@ -37,6 +37,16 @@
 {% set engagement = data.engagement | default({}) %}
 {% set nav = data.navigation | default({}) %}
 
+{% if demo_mode %}
+<div class="demo-banner">
+  <span class="demo-banner-icon">&#9679;</span>
+  <div>
+    <strong>Sample property on synthetic data.</strong>
+    <p>This page renders the full per-property report for a fictional B2B SaaS site (&ldquo;Acme Cloud&rdquo;). Connect a live GA4 property and the same views fill with real figures.</p>
+  </div>
+</div>
+{% endif %}
+
 <!-- Color strip -->
 <div class="site-strip" style="background:{{ site.accent_color }};"></div>
 

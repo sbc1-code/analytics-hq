@@ -2,7 +2,9 @@
 
 Connector-first GA4 reporting dashboard for multiple web properties, published with GitHub Pages.
 
-The default public page is a setup state, not a sample dashboard. Live metrics appear after a GA4 service account and numeric property IDs are configured.
+When no live GA4 credentials are configured, the pipeline renders a fully populated **sample dashboard** on synthetic data for a fictional company ("Acme Cloud"), clearly badged as sample data, so the report can be evaluated end to end. The moment a GA4 service account and numeric property IDs are wired in, it switches to live figures automatically and the sample is bypassed.
+
+Demo mode is controlled by `demo_when_unconfigured` in `config/sites.json` (default `true`) and can be forced on or off with the `ANALYTICS_HQ_DEMO` environment variable. Sample numbers are deterministic per calendar day, so scheduled runs do not churn; only the trailing 14-day date labels roll forward.
 
 ## Pipeline
 

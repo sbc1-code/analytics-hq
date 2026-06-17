@@ -160,6 +160,7 @@ for site in sites:
         })
 
 setup_status = build_setup_status(sites_data)
+demo_mode = bool(overview.get("demo")) or any(d.get("demo") for d in sites_data)
 
 # Copy static assets
 if ASSETS_DIR.exists():
@@ -177,6 +178,7 @@ def render_static_tree(output_dir, label):
         setup_status=setup_status,
         alerts=alerts,
         generated_at=generated_at,
+        demo_mode=demo_mode,
         root_prefix=".",
         config_sites=sites,
     )
@@ -194,6 +196,7 @@ def render_static_tree(output_dir, label):
             data=site_data,
             site_alerts=site_alerts,
             generated_at=generated_at,
+            demo_mode=demo_mode,
             root_prefix="..",
             config_sites=sites,
         )

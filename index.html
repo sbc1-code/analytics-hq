@@ -423,6 +423,43 @@
       color: var(--brand-dark);
     }
 
+    /* DEMO MODE */
+    .demo-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid #c9b07a;
+      background: #fff7e8;
+      color: #8a5b11;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .demo-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #cf8a1a;
+    }
+    .demo-banner {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #fffaf0;
+      border: 1px solid #ecd9b0;
+      border-left: 4px solid #cf8a1a;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .demo-banner .demo-banner-icon { font-size: 16px; line-height: 1.3; flex-shrink: 0; }
+    .demo-banner strong { display: block; font-size: 13px; color: var(--brand-dark); margin-bottom: 2px; }
+    .demo-banner p { font-size: 12.5px; color: #6a5a3c; margin: 0; }
+
     /* FOOTER */
     footer {
       text-align: center;
@@ -467,143 +504,95 @@
   <a href="./index.html" class="nav-brand">
     <span class="nav-suite">Analytics HQ</span>
   </a>
+  <span class="demo-chip">Sample data</span>
   <div class="nav-links">
     <a href="./index.html" class="active">Overview</a>
     
-    <a href="./primary/index.html" >Primary Website</a>
+    <a href="./primary/index.html" >Acme Cloud — Marketing Site</a>
     
-    <a href="./support/index.html" >Support or Docs Site</a>
+    <a href="./support/index.html" >Acme Cloud — Docs &amp; Support</a>
     
-    <a href="./product/index.html" >Product or Tool Site</a>
+    <a href="./product/index.html" >Acme Cloud — Web App</a>
     
   </div>
   <div class="nav-spacer"></div>
-  <span class="nav-timestamp">June 16, 2026 at 18:46 UTC</span>
+  <span class="nav-timestamp">June 17, 2026 at 04:55 UTC</span>
 </nav>
 
 <div class="page-wrap">
   
 <div class="page-header">
-  <h1>Connect GA4. Ship stakeholder reports automatically.</h1>
-  <p>Analytics HQ turns configured GA4 properties into weekly-ready site performance reports. Until credentials and property IDs are connected, this page shows the setup state instead of fake metrics.</p>
+  <h1>Multi-site GA4 reporting, translated into business signals.</h1>
+  <p>Analytics HQ pulls every connected GA4 property into one automated, stakeholder-ready report: traffic and engagement with week-over-week deltas, channel and device mix, high-intent path detection, and threshold alerts.</p>
 </div>
 
 
-  
-    
-<div class="alert-banner alert-warning">
-  <span class="alert-icon">&#8505;</span>
-  <div class="alert-body">
-    <strong>Primary Website &mdash; Pending Setup</strong>
-    GA4 property ID is missing. Set GA4_PROPERTY_ID_PRIMARY in GitHub Actions secrets or numeric_property_id in config/sites.json.
-  </div>
-</div>
-
-<div class="alert-banner alert-warning">
-  <span class="alert-icon">&#8505;</span>
-  <div class="alert-body">
-    <strong>Support or Docs Site &mdash; Pending Setup</strong>
-    GA4 property ID is missing. Set GA4_PROPERTY_ID_SUPPORT in GitHub Actions secrets or numeric_property_id in config/sites.json.
-  </div>
-</div>
-
-<div class="alert-banner alert-warning">
-  <span class="alert-icon">&#8505;</span>
-  <div class="alert-body">
-    <strong>Product or Tool Site &mdash; Pending Setup</strong>
-    GA4 property ID is missing. Set GA4_PROPERTY_ID_PRODUCT in GitHub Actions secrets or numeric_property_id in config/sites.json.
-  </div>
-</div>
-
-  
-
-
-<div class="setup-hero">
-  <div class="setup-panel">
-    <h2>Built for operators who need the report without the spreadsheet chase.</h2>
-    <p>Configure a service account, add numeric GA4 property IDs, and let the pipeline fetch traffic, engagement, device, channel, and high-intent path signals into static GitHub Pages reports.</p>
-  </div>
-  <div class="setup-panel">
-    <h2>Current connection state</h2>
-    <p>0 of 3 configured properties are reporting live GA4 data. Live metrics appear after connection.</p>
-  </div>
-</div>
-
-<div class="setup-grid" aria-label="Analytics HQ setup checklist">
-  <div class="setup-card pending">
-    <span class="setup-state">Pending</span>
-    <h3>GA4 service account</h3>
-    <p>Set <code>GA4_SERVICE_ACCOUNT_JSON</code> or <code>GA4_SERVICE_ACCOUNT_FILE</code> in GitHub Actions.</p>
-  </div>
-  <div class="setup-card pending">
-    <span class="setup-state">Pending</span>
-    <h3>Property IDs</h3>
-    <p>0 of 3 numeric GA4 property IDs are configured.</p>
-  </div>
-  <div class="setup-card ready">
-    <span class="setup-state">Ready</span>
-    <h3>Scheduled report</h3>
-    <p>GitHub Actions can refresh the static report on schedule or by manual dispatch.</p>
-  </div>
-  <div class="setup-card ready">
-    <span class="setup-state">Ready</span>
-    <h3>Alerts config</h3>
-    <p>Optional thresholds flag session drops, engagement shifts, and high-priority changes.</p>
+<div class="demo-banner">
+  <span class="demo-banner-icon">&#9679;</span>
+  <div>
+    <strong>This is a live sample on synthetic data.</strong>
+    <p>The numbers below belong to a fictional B2B SaaS company (&ldquo;Acme Cloud&rdquo;) and are regenerated by the pipeline on schedule, so you can see the full working report without a connected GA4 account. Wire a real GA4 service account and the same layout fills with live figures automatically.</p>
   </div>
 </div>
 
 
-<div class="empty-preview">
-  <strong>Live metrics appear after connection.</strong>
-  The cards and tables below are wired to the generated GA4 pipeline, but no configured property is reporting yet. This default state is intentionally blank rather than filled with invented metrics.
-</div>
 
 
 <div class="executive-strip">
   <h2>Cross-site summary</h2>
-  <p>Last 7 days across connected GA4 properties.</p>
+  <p>Last 7 days across 3 reporting GA4 properties.</p>
   <div class="exec-kpi-grid">
     <div class="exec-kpi">
       <div class="label">Sessions (7d)</div>
-      <div class="value">--</div>
-      <div class="sub trend-flat">-- vs prior week</div>
+      <div class="value">25,760</div>
+      <div class="sub trend-up">+6.7% vs prior week</div>
     </div>
     <div class="exec-kpi">
       <div class="label">Users (7d)</div>
-      <div class="value">--</div>
+      <div class="value">21,123</div>
       <div class="sub">Active audience breadth</div>
     </div>
     <div class="exec-kpi">
       <div class="label">Pageviews (7d)</div>
-      <div class="value">--</div>
+      <div class="value">76,400</div>
       <div class="sub">Consumption depth</div>
     </div>
     <div class="exec-kpi">
       <div class="label">Intent Views (7d)</div>
-      <div class="value">--</div>
+      <div class="value">21,465</div>
       <div class="sub">High-value path demand</div>
     </div>
     <div class="exec-kpi">
       <div class="label">Sites Reporting</div>
-      <div class="value">0</div>
-      <div class="sub">Properties with live GA4 data</div>
+      <div class="value">3</div>
+      <div class="sub">Properties with GA4 data</div>
     </div>
     <div class="exec-kpi">
       <div class="label">Avg Engagement</div>
-      <div class="value">--</div>
+      <div class="value">65.0%</div>
       <div class="sub">Cross-site average engagement rate</div>
     </div>
     <div class="exec-kpi">
       <div class="label">Pages / Session</div>
-      <div class="value">--</div>
+      <div class="value">2.97</div>
       <div class="sub">Depth across all sessions</div>
     </div>
     <div class="exec-kpi">
       <div class="label">New User Share</div>
-      <div class="value">--</div>
+      <div class="value">41.0%</div>
       <div class="sub">Average audience acquisition mix</div>
     </div>
   </div>
+  
+  <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:10px;">
+    
+    <span class="cx-chip" style="border-color:#b8d0c5; background:#eef7f2;">Top momentum: Acme Cloud — Web App <strong class="trend-up">+21.4%</strong></span>
+    
+    
+    <span class="cx-chip" style="border-color:#e2c4b0; background:#fdf2ec;">Watch: Acme Cloud — Docs &amp; Support <strong class="trend-down">-3.1%</strong></span>
+    
+  </div>
+  
 </div>
 
 <div class="section-nav" style="position: static; top: auto;">
@@ -611,6 +600,7 @@
   <a href="#comparison-7d">7-Day Comparison</a>
   <a href="#engagement-audience">Engagement and Audience</a>
   <a href="#device-split">Device Split</a>
+  <a href="#how-it-works">How It Works</a>
 </div>
 
 <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 24px;">
@@ -618,36 +608,57 @@
   
   <div class="kpi-card" style="border-top: 4px solid #2f6f5f;">
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-      <div class="kpi-label" style="margin-bottom:0;">Primary Website</div>
+      <div class="kpi-label" style="margin-bottom:0;">Acme Cloud — Marketing Site</div>
       <a href="primary/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
     </div>
     
-      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
-      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+      <div class="kpi-value">14,280</div>
+      <div class="kpi-wow trend-up">+8.2% sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        Top-of-funnel brand and demand site for discovery, content engagement, and demo intent
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: 29.6%</span>
+        <span class="cx-chip">Primary channel: Organic Search</span>
+      </div>
     
   </div>
   
   
   <div class="kpi-card" style="border-top: 4px solid #a8651a;">
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-      <div class="kpi-label" style="margin-bottom:0;">Support or Docs Site</div>
+      <div class="kpi-label" style="margin-bottom:0;">Acme Cloud — Docs &amp; Support</div>
       <a href="support/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
     </div>
     
-      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
-      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+      <div class="kpi-value">7,120</div>
+      <div class="kpi-wow trend-down">-3.1% sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        Documentation and support property for activation, post-sale enablement, and retention
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: 14.7%</span>
+        <span class="cx-chip">Primary channel: Direct</span>
+      </div>
     
   </div>
   
   
   <div class="kpi-card" style="border-top: 4px solid #4f6475;">
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-      <div class="kpi-label" style="margin-bottom:0;">Product or Tool Site</div>
+      <div class="kpi-label" style="margin-bottom:0;">Acme Cloud — Web App</div>
       <a href="product/index.html" style="font-size:11px; color:var(--blue); text-decoration:none;">Property Detail &rarr;</a>
     </div>
     
-      <div style="color:var(--text-muted); font-size:22px; font-weight:700; margin:8px 0;">--</div>
-      <div style="font-size:12px; color:var(--text-muted);">Pending GA4 setup</div>
+      <div class="kpi-value">4,360</div>
+      <div class="kpi-wow trend-up">+21.4% sessions vs last week</div>
+      <div style="margin-top:8px; font-size:12px; color:var(--text-muted);">
+        In-product property for signup, account, and expansion intent inside the app
+      </div>
+      <div style="margin-top:8px;">
+        <span class="cx-chip">Intent share: 40.2%</span>
+        <span class="cx-chip">Primary channel: Direct</span>
+      </div>
     
   </div>
   
@@ -673,12 +684,26 @@
         <td>
           <a href="primary/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>
-            Primary Website
+            Acme Cloud — Marketing Site
           </a>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">example.com</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">acmecloud.com</div>
         </td>
         
-          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td style="font-size:12px;">Top-of-funnel brand and demand site for discovery, content engagement, and demo intent</td>
+          <td class="num">
+            10,146
+            <div style="font-size:11px; color:var(--text-muted);">29.6% of top-page demand</div>
+          </td>
+          <td>
+            <strong>Organic Search</strong>
+            <div style="font-size:11px; color:var(--text-muted);">46.0% share</div>
+          </td>
+          <td style="font-size:12px;">
+            
+              /pricing
+            
+          </td>
+          <td class="num trend-up"><strong>+8.2%</strong></td>
         
       </tr>
       
@@ -687,12 +712,26 @@
         <td>
           <a href="support/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>
-            Support or Docs Site
+            Acme Cloud — Docs &amp; Support
           </a>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">support.example.com</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">docs.acmecloud.com</div>
         </td>
         
-          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td style="font-size:12px;">Documentation and support property for activation, post-sale enablement, and retention</td>
+          <td class="num">
+            3,250
+            <div style="font-size:11px; color:var(--text-muted);">14.7% of top-page demand</div>
+          </td>
+          <td>
+            <strong>Direct</strong>
+            <div style="font-size:11px; color:var(--text-muted);">41.0% share</div>
+          </td>
+          <td style="font-size:12px;">
+            
+              /help/billing
+            
+          </td>
+          <td class="num trend-down"><strong>-3.1%</strong></td>
         
       </tr>
       
@@ -701,12 +740,26 @@
         <td>
           <a href="product/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>
-            Product or Tool Site
+            Acme Cloud — Web App
           </a>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">product.example.com</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">app.acmecloud.com</div>
         </td>
         
-          <td colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td style="font-size:12px;">In-product property for signup, account, and expansion intent inside the app</td>
+          <td class="num">
+            8,069
+            <div style="font-size:11px; color:var(--text-muted);">40.2% of top-page demand</div>
+          </td>
+          <td>
+            <strong>Direct</strong>
+            <div style="font-size:11px; color:var(--text-muted);">58.0% share</div>
+          </td>
+          <td style="font-size:12px;">
+            
+              /signup
+            
+          </td>
+          <td class="num trend-up"><strong>+21.4%</strong></td>
         
       </tr>
       
@@ -734,12 +787,16 @@
         <td>
           <a href="primary/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>
-            Primary Website
+            Acme Cloud — Marketing Site
           </a>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">example.com</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">acmecloud.com</div>
         </td>
         
-          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td class="num">14,280</td>
+          <td class="num">11,710</td>
+          <td class="num">34,272</td>
+          <td class="num">55,121</td>
+          <td class="num trend-up"><strong>+8.2%</strong></td>
         
       </tr>
       
@@ -748,12 +805,16 @@
         <td>
           <a href="support/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>
-            Support or Docs Site
+            Acme Cloud — Docs &amp; Support
           </a>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">support.example.com</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">docs.acmecloud.com</div>
         </td>
         
-          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td class="num">7,120</td>
+          <td class="num">5,838</td>
+          <td class="num">22,072</td>
+          <td class="num">27,483</td>
+          <td class="num trend-down"><strong>-3.1%</strong></td>
         
       </tr>
       
@@ -762,12 +823,16 @@
         <td>
           <a href="product/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>
-            Product or Tool Site
+            Acme Cloud — Web App
           </a>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">product.example.com</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:16px;">app.acmecloud.com</div>
         </td>
         
-          <td class="num" colspan="5" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td class="num">4,360</td>
+          <td class="num">3,575</td>
+          <td class="num">20,056</td>
+          <td class="num">16,830</td>
+          <td class="num trend-up"><strong>+21.4%</strong></td>
         
       </tr>
       
@@ -796,11 +861,16 @@
         <td>
           <a href="primary/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>
-            Primary Website
+            Acme Cloud — Marketing Site
           </a>
         </td>
         
-          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td class="num">57.1%</td>
+          <td class="num">02:18</td>
+          <td class="num">2.40</td>
+          <td class="num">68.0%</td>
+          <td class="num">32.0%</td>
+          <td class="num trend-up"><strong>+8.2%</strong></td>
         
       </tr>
       
@@ -809,11 +879,16 @@
         <td>
           <a href="support/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>
-            Support or Docs Site
+            Acme Cloud — Docs &amp; Support
           </a>
         </td>
         
-          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td class="num">63.8%</td>
+          <td class="num">03:16</td>
+          <td class="num">3.10</td>
+          <td class="num">34.0%</td>
+          <td class="num">66.0%</td>
+          <td class="num trend-down"><strong>-3.1%</strong></td>
         
       </tr>
       
@@ -822,11 +897,16 @@
         <td>
           <a href="product/index.html" style="color:var(--navy); font-weight:600; text-decoration:none;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>
-            Product or Tool Site
+            Acme Cloud — Web App
           </a>
         </td>
         
-          <td colspan="6" class="num" style="color:var(--text-muted); font-style:italic;">Pending GA4 configuration</td>
+          <td class="num">74.2%</td>
+          <td class="num">05:12</td>
+          <td class="num">4.60</td>
+          <td class="num">21.0%</td>
+          <td class="num">79.0%</td>
+          <td class="num trend-up"><strong>+21.4%</strong></td>
         
       </tr>
       
@@ -849,25 +929,94 @@
       
       
       <tr>
-        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>Primary Website</td>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6f5f; margin-right:8px;"></span>Acme Cloud — Marketing Site</td>
         
-          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+          
+          
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">58.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:58.0%; background:#2f6f5f;"></div></div>
+            
+          </td>
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">38.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:38.0%; background:#2f6f5f;"></div></div>
+            
+          </td>
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">4.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:4.0%; background:#2f6f5f;"></div></div>
+            
+          </td>
+          
         
       </tr>
       
       
       <tr>
-        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>Support or Docs Site</td>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a8651a; margin-right:8px;"></span>Acme Cloud — Docs &amp; Support</td>
         
-          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+          
+          
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">71.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:71.0%; background:#a8651a;"></div></div>
+            
+          </td>
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">26.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:26.0%; background:#a8651a;"></div></div>
+            
+          </td>
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">3.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:3.0%; background:#a8651a;"></div></div>
+            
+          </td>
+          
         
       </tr>
       
       
       <tr>
-        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>Product or Tool Site</td>
+        <td><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4f6475; margin-right:8px;"></span>Acme Cloud — Web App</td>
         
-          <td colspan="3" style="color:var(--text-muted); font-style:italic;">Pending</td>
+          
+          
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">82.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:82.0%; background:#4f6475;"></div></div>
+            
+          </td>
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">15.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:15.0%; background:#4f6475;"></div></div>
+            
+          </td>
+          
+          <td>
+            
+              <div style="font-size:13px; font-weight:600; margin-bottom:3px;">3.0%</div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:3.0%; background:#4f6475;"></div></div>
+            
+          </td>
+          
         
       </tr>
       
@@ -875,10 +1024,25 @@
   </table>
 </div>
 
+<div class="card" id="how-it-works">
+  <div class="card-title">How it works</div>
+  <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px; max-width:760px;">
+    Each property is tagged with its business purpose and the high-intent paths that matter, so traffic reads as customer-need signals instead of vanity metrics. The pipeline runs unattended: there is no dashboard tool to log into and no manual export.
+  </p>
+  <div class="section-28d">
+    <div class="metric"><span class="metric-label">Step 1</span><span class="metric-value">Fetch</span><span style="font-size:12px;color:var(--text-muted);">GA4 Data API, per property</span></div>
+    <div class="metric"><span class="metric-label">Step 2</span><span class="metric-value">Analyze</span><span style="font-size:12px;color:var(--text-muted);">WoW deltas, intent paths</span></div>
+    <div class="metric"><span class="metric-label">Step 3</span><span class="metric-value">Alert</span><span style="font-size:12px;color:var(--text-muted);">Threshold checks</span></div>
+    <div class="metric"><span class="metric-label">Step 4</span><span class="metric-value">Report</span><span style="font-size:12px;color:var(--text-muted);">Static HTML render</span></div>
+    <div class="metric"><span class="metric-label">Step 5</span><span class="metric-value">Publish</span><span style="font-size:12px;color:var(--text-muted);">GitHub Pages, on schedule</span></div>
+  </div>
+</div>
+
 </div>
 
 <footer>
-  Analytics HQ &mdash; Generated by GitHub Actions &mdash; June 16, 2026 at 18:46 UTC
+  Analytics HQ &mdash; Generated by GitHub Actions &mdash; June 17, 2026 at 04:55 UTC
+  <br>Sample dashboard on synthetic data for a fictional company (&ldquo;Acme Cloud&rdquo;). Connect a GA4 service account to render live figures.
 </footer>
 
 </body>

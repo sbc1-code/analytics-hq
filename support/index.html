@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support or Docs Site | Analytics HQ</title>
+  <title>Acme Cloud — Docs &amp; Support | Analytics HQ</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -423,6 +423,43 @@
       color: var(--brand-dark);
     }
 
+    /* DEMO MODE */
+    .demo-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid #c9b07a;
+      background: #fff7e8;
+      color: #8a5b11;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .demo-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #cf8a1a;
+    }
+    .demo-banner {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #fffaf0;
+      border: 1px solid #ecd9b0;
+      border-left: 4px solid #cf8a1a;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .demo-banner .demo-banner-icon { font-size: 16px; line-height: 1.3; flex-shrink: 0; }
+    .demo-banner strong { display: block; font-size: 13px; color: var(--brand-dark); margin-bottom: 2px; }
+    .demo-banner p { font-size: 12.5px; color: #6a5a3c; margin: 0; }
+
     /* FOOTER */
     footer {
       text-align: center;
@@ -467,18 +504,19 @@
   <a href="../index.html" class="nav-brand">
     <span class="nav-suite">Analytics HQ</span>
   </a>
+  <span class="demo-chip">Sample data</span>
   <div class="nav-links">
     <a href="../index.html" >Overview</a>
     
-    <a href="../primary/index.html" >Primary Website</a>
+    <a href="../primary/index.html" >Acme Cloud — Marketing Site</a>
     
-    <a href="../support/index.html" class="active">Support or Docs Site</a>
+    <a href="../support/index.html" class="active">Acme Cloud — Docs &amp; Support</a>
     
-    <a href="../product/index.html" >Product or Tool Site</a>
+    <a href="../product/index.html" >Acme Cloud — Web App</a>
     
   </div>
   <div class="nav-spacer"></div>
-  <span class="nav-timestamp">June 16, 2026 at 18:46 UTC</span>
+  <span class="nav-timestamp">June 17, 2026 at 04:55 UTC</span>
 </nav>
 
 <div class="page-wrap">
@@ -486,34 +524,698 @@
 
 
 <div class="page-header">
-  <h1>Support or Docs Site</h1>
-  <p><a href="https://support.example.com" target="_blank" style="color:var(--blue);">support.example.com</a></p>
+  <h1>Acme Cloud — Docs &amp; Support</h1>
+  <p><a href="https://docs.acmecloud.com" target="_blank" style="color:var(--blue);">docs.acmecloud.com</a></p>
 </div>
 
 
-  
-    
-<div class="alert-banner alert-warning">
-  <span class="alert-icon">&#8505;</span>
-  <div class="alert-body">
-    <strong>Support or Docs Site &mdash; Pending Setup</strong>
-    GA4 property ID is missing. Set GA4_PROPERTY_ID_SUPPORT in GitHub Actions secrets or numeric_property_id in config/sites.json.
+
+
+
+
+
+
+<div class="demo-banner">
+  <span class="demo-banner-icon">&#9679;</span>
+  <div>
+    <strong>Sample property on synthetic data.</strong>
+    <p>This page renders the full per-property report for a fictional B2B SaaS site (&ldquo;Acme Cloud&rdquo;). Connect a live GA4 property and the same views fill with real figures.</p>
   </div>
 </div>
 
+
+<!-- Color strip -->
+<div class="site-strip" style="background:#a8651a;"></div>
+
+<!-- 7-Day KPIs -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-label">Sessions (7d)</div>
+    <div class="kpi-value">7,120</div>
+    <div class="kpi-wow trend-down">-3.1% vs prior week</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Users (7d)</div>
+    <div class="kpi-value">5,838</div>
+    <div class="kpi-wow trend-down">-3.1% vs prior week</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Pageviews (7d)</div>
+    <div class="kpi-value">22,072</div>
+    <div class="kpi-wow trend-down">-3.1% vs prior week</div>
+  </div>
+</div>
+
+<!-- 28-Day Summary Bar -->
+<div class="section-28d">
+  <div class="metric">
+    <div class="metric-label">Sessions (28d)</div>
+    <div class="metric-value">27,483</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Users (28d)</div>
+    <div class="metric-value">22,535</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Pageviews (28d)</div>
+    <div class="metric-value">85,198</div>
+  </div>
+</div>
+
+<div class="section-nav">
+  <a href="#context">Property Context</a>
+  <a href="#engagement">Engagement</a>
+  <a href="#traffic">Traffic Sources</a>
+  <a href="#audience">Audience Mix</a>
+  <a href="#trend">14-Day Trend</a>
+  <a href="#geo">Geography</a>
+  <a href="#devices">Device Split</a>
+</div>
+
+<div class="card" id="context">
+  <div class="card-title">Property Context</div>
+  <div style="display:grid; grid-template-columns: 1.6fr 1fr 1fr; gap:12px;">
+    <div>
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); font-weight:700;">Property Role</div>
+      <div style="margin-top:4px; font-size:13px;">Documentation and support property for activation, post-sale enablement, and retention</div>
+      <div style="margin-top:8px;">
+        
+          <span class="cx-chip" style="margin-right:4px; margin-bottom:4px;">Documentation demand</span>
+        
+          <span class="cx-chip" style="margin-right:4px; margin-bottom:4px;">Download and help intent</span>
+        
+          <span class="cx-chip" style="margin-right:4px; margin-bottom:4px;">Post-purchase support journeys</span>
+        
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); font-weight:700;">Primary Channel</div>
+      <div style="margin-top:4px; font-size:20px; font-weight:700;">Direct</div>
+      <div style="font-size:12px; color:var(--text-muted);">41.0% of sessions</div>
+    </div>
+    <div>
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); font-weight:700;">Intent Signal</div>
+      <div style="margin-top:4px; font-size:20px; font-weight:700;">3,250</div>
+      <div style="font-size:12px; color:var(--text-muted);">14.7% of top-page demand</div>
+      <div class="trend-flat" style="margin-top:4px; font-size:12px; font-weight:700;">Sessions trend: slightly down</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="engagement">
+  <div class="card-title">Engagement Quality (7d)</div>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-label">Engagement Rate</div>
+      <div class="insight-value">63.8%</div>
+      <div class="insight-sub">Share of engaged sessions</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">Avg Session Duration</div>
+      <div class="insight-value">03:16</div>
+      <div class="insight-sub">Average active time per session</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">Engaged Sessions</div>
+      <div class="insight-value">4,543</div>
+      <div class="insight-sub">Sessions with meaningful activity</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">Pageviews / Session</div>
+      <div class="insight-value">3.10</div>
+      <div class="insight-sub">Consumption depth indicator</div>
+    </div>
+  </div>
+  <div class="table-footnote">
+    Trend view: 7,120 sessions in last 7 days vs 7,348 prior
+    (<span class="trend-down">-3.1%</span>).
+  </div>
+</div>
+
+<!-- Top Pages + Sources -->
+<div class="two-col" id="traffic">
+
+  <div class="card">
+    <div class="card-title">Top Pages (7d)</div>
+    <table>
+      <thead><tr><th>#</th><th>Page</th><th class="num">Views</th></tr></thead>
+      <tbody>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">1</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/getting-started</td>
+          <td class="num">4,333</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">2</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/api/authentication</td>
+          <td class="num">3,250</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">3</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/integrations/salesforce</td>
+          <td class="num">2,708</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">4</td>
+          <td style="word-break:break-all; font-size:12px;">/support</td>
+          <td class="num">2,437</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">5</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/api/webhooks</td>
+          <td class="num">2,167</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">6</td>
+          <td style="word-break:break-all; font-size:12px;">/help/billing</td>
+          <td class="num">1,896</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">7</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/data-model</td>
+          <td class="num">1,625</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">8</td>
+          <td style="word-break:break-all; font-size:12px;">/download/sdk</td>
+          <td class="num">1,354</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">9</td>
+          <td style="word-break:break-all; font-size:12px;">/knowledge/troubleshooting</td>
+          <td class="num">1,219</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">10</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/changelog</td>
+          <td class="num">1,083</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Traffic Sources (7d)</div>
+    <table>
+      <thead><tr><th>Channel</th><th class="num">Sessions</th><th style="width:100px;">Share</th></tr></thead>
+      <tbody>
+        
+        <tr>
+          <td>Organic Search</td>
+          <td class="num">2,777</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:39.0%; background:#a8651a;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">39.0%</div>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Direct</td>
+          <td class="num">2,919</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:41.0%; background:#a8651a;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">41.0%</div>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Referral</td>
+          <td class="num">854</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:12.0%; background:#a8651a;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">12.0%</div>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Email</td>
+          <td class="num">356</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:5.0%; background:#a8651a;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">5.0%</div>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Organic Social</td>
+          <td class="num">214</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:3.0%; background:#a8651a;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">3.0%</div>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="card">
+  <div class="card-title">High-Intent Pages (7d)</div>
+  <table>
+    <thead><tr><th>#</th><th>Page Path</th><th class="num">Views</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td style="color:var(--text-muted); width:28px;">1</td>
+        <td style="word-break:break-all; font-size:12px;">/help/billing</td>
+        <td class="num">1,896</td>
+      </tr>
+      
+      <tr>
+        <td style="color:var(--text-muted); width:28px;">2</td>
+        <td style="word-break:break-all; font-size:12px;">/download/sdk</td>
+        <td class="num">1,354</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+<div class="two-col" id="geo">
+  <div class="card">
+    <div class="card-title">Top Landing Pages (7d)</div>
+    <table>
+      <thead><tr><th>#</th><th>Landing Page</th><th class="num">Sessions</th><th class="num">Share</th></tr></thead>
+      <tbody>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">1</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/getting-started</td>
+          <td class="num">1,803</td>
+          <td class="num">25.3%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">2</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/api/authentication</td>
+          <td class="num">1,329</td>
+          <td class="num">18.7%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">3</td>
+          <td style="word-break:break-all; font-size:12px;">/support</td>
+          <td class="num">1,044</td>
+          <td class="num">14.7%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">4</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/integrations/salesforce</td>
+          <td class="num">854</td>
+          <td class="num">12.0%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">5</td>
+          <td style="word-break:break-all; font-size:12px;">/help/billing</td>
+          <td class="num">665</td>
+          <td class="num">9.3%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">6</td>
+          <td style="word-break:break-all; font-size:12px;">/docs/api/webhooks</td>
+          <td class="num">570</td>
+          <td class="num">8.0%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">7</td>
+          <td style="word-break:break-all; font-size:12px;">/download/sdk</td>
+          <td class="num">475</td>
+          <td class="num">6.7%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">8</td>
+          <td style="word-break:break-all; font-size:12px;">/knowledge/troubleshooting</td>
+          <td class="num">380</td>
+          <td class="num">5.3%</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Top Countries (7d)</div>
+    <table>
+      <thead><tr><th>#</th><th>Country</th><th class="num">Sessions</th><th class="num">Share</th></tr></thead>
+      <tbody>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">1</td>
+          <td>United States</td>
+          <td class="num">4,233</td>
+          <td class="num">59.5%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">2</td>
+          <td>India</td>
+          <td class="num">847</td>
+          <td class="num">11.9%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">3</td>
+          <td>United Kingdom</td>
+          <td class="num">616</td>
+          <td class="num">8.7%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">4</td>
+          <td>Germany</td>
+          <td class="num">462</td>
+          <td class="num">6.5%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">5</td>
+          <td>Canada</td>
+          <td class="num">385</td>
+          <td class="num">5.4%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">6</td>
+          <td>Brazil</td>
+          <td class="num">308</td>
+          <td class="num">4.3%</td>
+        </tr>
+        
+        <tr>
+          <td style="color:var(--text-muted); width:28px;">7</td>
+          <td>Mexico</td>
+          <td class="num">269</td>
+          <td class="num">3.8%</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" id="audience">
+  <div class="card-title">New vs Returning Audience (7d)</div>
+  <table>
+    <thead><tr><th>Segment</th><th class="num">Users</th><th class="num">Sessions</th><th class="num">User Share</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>New</td>
+        <td class="num">1,985</td>
+        <td class="num">2,179</td>
+        <td class="num">34.0%</td>
+      </tr>
+      
+      <tr>
+        <td>Returning</td>
+        <td class="num">3,853</td>
+        <td class="num">4,941</td>
+        <td class="num">66.0%</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+<div class="card" id="trend">
+  <div class="card-title">Daily Trend (Last 14 Days)</div>
   
-
-
-
-
-<div class="pending-card">
-  <div class="pending-icon">GA4</div>
-  <h3>GA4 connection pending</h3>
-  <p>
+  
+  
     
-      GA4 numeric property ID has not been set for this site. Set <code>GA4_PROPERTY_ID_SUPPORT</code> in GitHub Actions secrets (or update <code>config/sites.json</code>), then add the service account as a Viewer on the property.
+  
     
-  </p>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <table>
+    <thead><tr><th>Date</th><th class="num">Sessions</th><th class="num">Users</th><th class="num">Pageviews</th><th style="width:180px;">Sessions Trend</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>Jun 03</td>
+        <td class="num">1,306</td>
+        <td class="num">1,071</td>
+        <td class="num">4,049</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:92.4%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 04</td>
+        <td class="num">1,186</td>
+        <td class="num">973</td>
+        <td class="num">3,677</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:83.9%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 05</td>
+        <td class="num">1,104</td>
+        <td class="num">905</td>
+        <td class="num">3,422</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:78.1%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 06</td>
+        <td class="num">529</td>
+        <td class="num">434</td>
+        <td class="num">1,640</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:37.4%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 07</td>
+        <td class="num">488</td>
+        <td class="num">400</td>
+        <td class="num">1,513</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:34.5%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 08</td>
+        <td class="num">1,413</td>
+        <td class="num">1,159</td>
+        <td class="num">4,380</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:100.0%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 09</td>
+        <td class="num">1,322</td>
+        <td class="num">1,084</td>
+        <td class="num">4,098</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:93.6%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 10</td>
+        <td class="num">1,112</td>
+        <td class="num">912</td>
+        <td class="num">3,447</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:78.7%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 11</td>
+        <td class="num">1,362</td>
+        <td class="num">1,117</td>
+        <td class="num">4,222</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:96.4%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 12</td>
+        <td class="num">1,159</td>
+        <td class="num">950</td>
+        <td class="num">3,593</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:82.0%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 13</td>
+        <td class="num">615</td>
+        <td class="num">504</td>
+        <td class="num">1,906</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:43.5%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 14</td>
+        <td class="num">617</td>
+        <td class="num">506</td>
+        <td class="num">1,913</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:43.7%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 15</td>
+        <td class="num">1,112</td>
+        <td class="num">912</td>
+        <td class="num">3,447</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:78.7%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Jun 16</td>
+        <td class="num">1,143</td>
+        <td class="num">937</td>
+        <td class="num">3,543</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:80.9%; background:#a8651a;"></div>
+          </div>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+<!-- Device Split -->
+<div class="card" id="devices">
+  <div class="card-title">Device Split (7d)</div>
+  <table>
+    <thead><tr><th>Device</th><th class="num">Sessions</th><th style="width:200px;">Share</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>Desktop</td>
+        <td class="num">5055</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:71.0%; background:#a8651a;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">71.0%</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Mobile</td>
+        <td class="num">1851</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:26.0%; background:#a8651a;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">26.0%</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Tablet</td>
+        <td class="num">214</td>
+        <td>
+          <div class="bar-wrap" style="max-width:160px;">
+            <div class="bar-fill" style="width:3.0%; background:#a8651a;"></div>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">3.0%</div>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
 </div>
 
 
@@ -521,7 +1223,8 @@
 </div>
 
 <footer>
-  Analytics HQ &mdash; Generated by GitHub Actions &mdash; June 16, 2026 at 18:46 UTC
+  Analytics HQ &mdash; Generated by GitHub Actions &mdash; June 17, 2026 at 04:55 UTC
+  <br>Sample dashboard on synthetic data for a fictional company (&ldquo;Acme Cloud&rdquo;). Connect a GA4 service account to render live figures.
 </footer>
 
 </body>
